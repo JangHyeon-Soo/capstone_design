@@ -1,0 +1,9 @@
+Begin Object Class=/Script/Engine.Skeleton Name="SK_AR4_Skeleton" ExportPath="/Script/Engine.Skeleton'/Game/FPS_Weapon_Bundle/Weapons/Meshes/AR4/SK_AR4_Skeleton.SK_AR4_Skeleton'"
+   Begin Object Class=/Script/Engine.AnimCurveMetaData Name="AnimCurveMetaData_0" ExportPath="/Script/Engine.AnimCurveMetaData'/Game/FPS_Weapon_Bundle/Weapons/Meshes/AR4/SK_AR4_Skeleton.SK_AR4_Skeleton:AnimCurveMetaData_0'"
+   End Object
+   Begin Object Name="AnimCurveMetaData_0" ExportPath="/Script/Engine.AnimCurveMetaData'/Game/FPS_Weapon_Bundle/Weapons/Meshes/AR4/SK_AR4_Skeleton.SK_AR4_Skeleton:AnimCurveMetaData_0'"
+   End Object
+   BoneTree(8)=()
+   PreviewSkeletalMesh="/Game/FPS_Weapon_Bundle/Weapons/Meshes/AR4/SK_AR4.SK_AR4"
+   AssetUserData(0)="/Script/Engine.AnimCurveMetaData'AnimCurveMetaData_0'"
+End Object
