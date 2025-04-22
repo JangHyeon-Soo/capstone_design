@@ -9,8 +9,11 @@ public class UserInterfaceLogic : MonoBehaviour
     public CamController camController;
     public PlayerInput playerInput;
     InputAction inventoryAction;
+    [Space(10)]
 
+    [Header("UI")]
     public GameObject InventoryUI;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

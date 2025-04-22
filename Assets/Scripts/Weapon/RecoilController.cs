@@ -4,7 +4,7 @@ using System.Collections;
 
 public class RecoilController : MonoBehaviour
 {
-    public Transform Owner;
+    public PlayerController Owner;
     public Transform ikTarget;         // 오른손 IK 타겟 (카메라 자식)
     public Vector3 recoilOffset; // 반동: 위 + 뒤로
     public Quaternion rotationOffset;
@@ -30,13 +30,12 @@ public class RecoilController : MonoBehaviour
     //public float recoilDuration = 0.5f;
 
     private float recoilTime = 0f;
-    //private bool isRecoiling = false;
     private Quaternion originalRot;
     public void Start()
     {
         if(gameObject.tag == "Player")
         {
-            Owner = transform.root;
+            Owner = GetComponentInParent<PlayerController>();
         }
     }
     public void ApplyRecoil()
@@ -44,11 +43,17 @@ public class RecoilController : MonoBehaviour
         if (ikTarget == null) return;
         else if (isRecoiling) return;
 
-        transform.GetComponent<WeaponScript>().FireEffect();
+        // 머즐 플래시
+        transform.GetComponent<WeaponScript>().FireEffect(); 
+
+        //카메라 흔들기
+        Owner.GetComponent<PlayerController>().playerCamera.GetComponent<CamController>().StartCameraShake(0.1f, 0.001f, 2f); // 1초, 강도 0.2, 빈도 2
 
         isRecoiling = true;
         recoilTime = 0;
 
+
+        //반동 
         StopAllCoroutines();
         StartCoroutine(DoRecoil());
     }

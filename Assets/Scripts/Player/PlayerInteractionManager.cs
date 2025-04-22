@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,7 @@ public class PlayerInteractionManager : MonoBehaviour
 
     public GameObject interactionObject;
 
+    public TMP_Text interactionText;
     Vector3 center;
 
     PlayerInput playerInput;
@@ -38,11 +40,13 @@ public class PlayerInteractionManager : MonoBehaviour
         if(isHit && hit.transform.GetComponent<ItemMananger>())
         {
             interactionObject = hit.transform.gameObject;
+            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]"; 
         }
 
         else
         {
             interactionObject = null;
+            interactionText.text = "";
 
         }
 
