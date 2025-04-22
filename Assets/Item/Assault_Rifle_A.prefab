@@ -793,13 +793,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9050058391248921098}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4866299, y: -0.3606572, z: 0.71200603, w: 0.35519752}
-  m_LocalPosition: {x: -0.08075768, y: -0.12860858, z: -0.010188362}
+  m_LocalRotation: {x: 0.41211522, y: -0.5044242, z: 0.6746448, w: 0.34723443}
+  m_LocalPosition: {x: -0.057975914, y: -0.07575127, z: -0.005692907}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6616041445060584251}
-  m_LocalEulerAnglesHint: {x: 120.76401, y: -121.365005, z: -17.61499}
+  m_LocalEulerAnglesHint: {x: 104.802, y: -126.353, z: -11.917999}
 --- !u!1001 &964445264433628768
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -808,6 +808,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 838161503333927098}
     m_Modifications:
+    - target: {fileID: 1210343329632724686, guid: 4a0ebddac3695cb49be74f4d1ddd296c, type: 3}
+      propertyPath: m_InitialEventName
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4751766000321562647, guid: 4a0ebddac3695cb49be74f4d1ddd296c, type: 3}
       propertyPath: m_Name
       value: Muzzle Flash

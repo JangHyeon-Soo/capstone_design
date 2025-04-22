@@ -216,14 +216,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Assault_Rifle_A
       objectReference: {fileID: 0}
-    - target: {fileID: 2138757940177952942, guid: b604843cb8445094585e70ac19f3d0c7, type: 3}
-      propertyPath: m_InitialEventName
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2138757940177952942, guid: b604843cb8445094585e70ac19f3d0c7, type: 3}
-      propertyPath: m_InitialEventNameOverriden
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6616041445060584251, guid: b604843cb8445094585e70ac19f3d0c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.2385538
