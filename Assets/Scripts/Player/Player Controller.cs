@@ -157,20 +157,24 @@ public class PlayerController : MonoBehaviour
 
         #region 중력
 
-        currentTime += Time.deltaTime;
-
-        currentVelocity = Vector3.Slerp(currentVelocity, velocity, Time.deltaTime * 120f);
-        currentVelocity.y += -9.81f * currentTime; // 중력 적용
-
-        if(controller.enabled)
-        controller.Move(currentVelocity * Time.deltaTime);
-
-        if (isJumping && controller.isGrounded)
+        if(!isVaulting)
         {
-            isJumping = false;
-            velocity = Vector3.zero;
+            currentTime += Time.deltaTime;
 
+            currentVelocity = Vector3.Slerp(currentVelocity, velocity, Time.deltaTime * 120f);
+            currentVelocity.y += -9.81f * currentTime; // 중력 적용
+
+            if (controller.enabled)
+                controller.Move(currentVelocity * Time.deltaTime);
+
+            if (isJumping && controller.isGrounded)
+            {
+                isJumping = false;
+                velocity = Vector3.zero;
+
+            }
         }
+        
 
 
 
@@ -254,12 +258,13 @@ public class PlayerController : MonoBehaviour
 
         if(isVaulting)
         {
-            controller.enabled = false;
-            
+            //controller.enabled = false;
+            transform.position += Vector3.up * Time.deltaTime;
+
             //Debug.Log("rootPosition: " + animator.rootPosition);
-            //if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, 0.25f))
+            //if (Physics.Raycast(transform.position + transform.forward * -0.1f, transform.up, out RaycastHit hit, 0.5f))
             //{
-                
+
             //    controller.Move(Vector3.up * Time.deltaTime);
             //    //Vector3.Lerp(controller.transform.position, animator.rootPosition, t);
             //}
@@ -288,10 +293,10 @@ public class PlayerController : MonoBehaviour
                 isVaulting = false;
                 animator.applyRootMotion = false;
                 vaultTimer = 0;
-                controller.enabled = true;
+                //controller.enabled = true;
 
                 Bounds bound = mantleObject.GetComponent<Collider>().bounds;
-                controller.transform.position = bound.center + Vector3.up * (bound.size.y / 2) * 2f;
+                //controller.transform.position = bound.center + Vector3.up * (bound.size.y / 2) * 2f;
 
 
             }
