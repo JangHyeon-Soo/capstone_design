@@ -169,7 +169,6 @@ public class HandIKController : MonoBehaviour
 
       
         #endregion
-
         #region Hand IK
         if (pc.armState == GameManager.armState.Pistol)
         {
@@ -230,35 +229,6 @@ public class HandIKController : MonoBehaviour
         }
         #endregion
 
-    }
-
-
-
-    void SetFootIKPosition()
-    {
-        if (controller.velocity == Vector3.zero)
-        {
-            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 1);
-            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 1);
-
-            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 1);
-            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 1);
-
-            animator.SetIKPosition(AvatarIKGoal.LeftFoot, LFT.position);
-            animator.SetIKRotation(AvatarIKGoal.LeftFoot, LFT.rotation);
-
-            animator.SetIKPosition(AvatarIKGoal.RightFoot, RFT.position);
-            animator.SetIKRotation(AvatarIKGoal.RightFoot, RFT.rotation);
-        }
-
-        else
-        {
-            animator.SetIKPositionWeight(AvatarIKGoal.LeftFoot, 0);
-            animator.SetIKRotationWeight(AvatarIKGoal.LeftFoot, 0);
-
-            animator.SetIKPositionWeight(AvatarIKGoal.RightFoot, 0);
-            animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 0);
-        }
     }
 
     public void OnLook(InputValue value)

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2d9a95de9ec06d34ea099334303afc15
+guid: 49af1c31188eef74d8c2a32745e5248b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -17,23 +17,9 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Unreal Take' has import animation warnings
-      that might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'spine_03' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n\t'spine_05' is inbetween
-      humanoid transforms and has rotation animation that will be discarded.\n"
-    animationRetargetingWarnings: "\nRetargeting quality report for clip 'Unreal
-      Take':\n\tLeftUpperArm average position error 17.4 mm and maximum position
-      error 32.1 mm at time 0:18 (39.1%) Frame 18\n\tLeftLowerArm average position
-      error 10.0 mm and maximum position error 24.0 mm at time 0:19 (41.3%) Frame
-      19\n\tLeftHand average position error 9.2 mm and maximum position error 23.4
-      mm at time 0:19 (41.3%) Frame 19\n\tRightUpperArm average position error 16.0
-      mm and maximum position error 28.5 mm at time 0:18 (39.1%) Frame 18\n\tRightLowerArm
-      average position error 9.4 mm and maximum position error 19.6 mm at time 0:19
-      (41.3%) Frame 19\n\tRightHand average position error 5.0 mm and maximum position
-      error 10.5 mm at time 0:20 (43.5%) Frame 20\n\tHead average position error
-      14.5 mm and maximum position error 33.9 mm at time 0:19 (41.3%) Frame 19\n"
-    animationDoRetargetingWarnings: 1
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
     animationCompression: 3
@@ -43,36 +29,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Quantum_N_Mantle_1m_RH
-      takeName: Unreal Take
-      internalID: 8993902097722301239
-      firstFrame: 0
-      lastFrame: 45
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 1
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 1
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 0
   meshes:
     lODScreenPercentages: []

@@ -55,6 +55,8 @@ public class AimOffset : MonoBehaviour
 
     private void Update()
     {
+        if(pc.isVaulting) return;
+
         Vector3 aimDir = AimPoint.forward;
         aimDir.y = 0;
 

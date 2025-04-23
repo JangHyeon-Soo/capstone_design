@@ -13309,10 +13309,10 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 8e4ef4b59ef025f438d8e05126a4c7b4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -17988,6 +17988,7 @@ MonoBehaviour:
   playerBody: {fileID: 5151117226375207094}
   cameraMode: 0
   playerCamera: {fileID: 6016010688499604857}
+  RigObject: {fileID: 8172372461082799200}
   controller: {fileID: 0}
   Direction: 0
   WalkSpeed: 1
