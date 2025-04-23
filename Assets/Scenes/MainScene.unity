@@ -13312,7 +13312,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 1
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -17995,9 +17995,6 @@ MonoBehaviour:
   armState: 0
   camRotation_y: 67
   isRun: 0
-  point1: {fileID: 7087443636289846754}
-  point2: {fileID: 3385820820681517860}
-  point3: {fileID: 2180997488131439907}
   gravity: -9.81
   jumpDistance: 0
   arcHeight: 5
@@ -18020,6 +18017,11 @@ MonoBehaviour:
   isReloading: 0
   isEquipping: 0
   isUnequipping: 0
+  isVaulting: 0
+  VaultRootBone: {fileID: 4545153813232085129}
+  point1: {fileID: 7087443636289846754}
+  point2: {fileID: 3385820820681517860}
+  point3: {fileID: 2180997488131439907}
   InputOn: 1
   isMove: 0
 --- !u!1 &5020668668117349233
