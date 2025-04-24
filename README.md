@@ -1,7 +1,7 @@
 # 캡스톤디자인
 
 ## 리포지토리 주소
-Bitbucket : https://jang_hyeon_soo-admin@bitbucket.org/jang_hyeon_soo/capstone.git
+Bitbucket : https://jang_hyeon_soo-admin@bitbucket.org/jang_hyeon_soo/capstone_design.git
 
 
 Github : https://github.com/JangHyeon-Soo/capstone_design.git
