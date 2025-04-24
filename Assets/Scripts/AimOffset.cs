@@ -78,39 +78,42 @@ public class AimOffset : MonoBehaviour
         {
             #region TurnInPlace
             ///턴인플레이스 부분
-            if (Mathf.Abs(offset) > 75 && !turn)
+            if (pc.isGrounded)
             {
-                turn = true;
-                animator.applyRootMotion = true;
-                
-
-                if (offset > 0)
+                if (Mathf.Abs(offset) > 75 && !turn)
                 {
-                    
-                    if (offset > 135) animator.Play(Right180dAnimName);
-                    else animator.Play(Right90dAnimName);
+                    turn = true;
+                    animator.applyRootMotion = true;
+
+
+                    if (offset > 0)
+                    {
+
+                        if (offset > 135) animator.Play(Right180dAnimName);
+                        else animator.Play(Right90dAnimName);
+
+                    }
+
+                    else
+                    {
+
+
+                        if (offset < -135) animator.Play(Left180dAnimName);
+                        else animator.Play(Left90dAnimName);
+                    }
+
 
                 }
 
-                else
+                if (turn)
                 {
 
-                   
-                    if (offset < -135) animator.Play(Left180dAnimName);
-                    else animator.Play(Left90dAnimName);
-                }
-
-
-            }
-
-            if (turn)
-            {
-
-                if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.95f)
-                {
-                    turn = false;
-                    animator.applyRootMotion = false;
-                }
+                    if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.95f)
+                    {
+                        turn = false;
+                        animator.applyRootMotion = false;
+                    }
+                } 
             }
             /////////////////////////////////////////////////////////////////// 
             #endregion

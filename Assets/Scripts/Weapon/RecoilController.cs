@@ -81,16 +81,6 @@ public class RecoilController : MonoBehaviour
         Vector3 posOffset = recoilDir * Random.Range(-0.03f, -0.07f);
         Vector3 targetPos = originalPos + posOffset;
 
-        //// 감쇠 진동 회전 변수 (총구 방향 회전)
-        //float dirAmplitude = 6f;    // 총구 방향 회전량 (degrees)
-        //float dirFrequency = 20f;   // 진동 속도
-        //float dirDamping = 5f;      // 감쇠 속도
-
-        //// 감쇠 진동 회전 변수 (로컬 X축 회전)
-        //float xAmplitude = 4f;     // 로컬 X축 회전량 (degrees)
-        //float xFrequency = 18f;    // 진동 속도
-        //float xDamping = 5f;       // 감쇠 속도
-
         float recoilDuration = 0.04f;
         float returnDuration = 0.04f;
 
@@ -114,35 +104,12 @@ public class RecoilController : MonoBehaviour
             // 기본 복귀 위치
             Vector3 currentPos = Vector3.Lerp(targetPos, originalPos, t);
 
-            //// 감쇠 진동 값 (총구 방향)
-            //float dirOscillation = dirAmplitude * Mathf.Sin(dirFrequency * time) * Mathf.Exp(-dirDamping * time);
-            //dirOscillation = Mathf.Clamp(dirOscillation, -2f, 2f);
-            //Quaternion dirRotationOffset = Quaternion.AngleAxis(dirOscillation, recoilDir);
-            
-
-            //// 감쇠 진동 값 (로컬 X축)
-            //float xOscillation = xAmplitude * Mathf.Sin(xFrequency * time) * Mathf.Exp(-xDamping * time);
-            //xOscillation = Mathf.Clamp(xOscillation, -3f, 3f);
-
-            //// 감쇠 진동 값 (로컬 Z축)
-            //float zOscillation = xAmplitude * Mathf.Sin(xFrequency * time + Mathf.PI / 2f) * Mathf.Exp(-xDamping * time);
-            //zOscillation = Mathf.Clamp(zOscillation, -2f, 2f);
-
-            //Quaternion xRotationOffset = Quaternion.Euler(xOscillation, 0f, zOscillation);
-
-            //// 최종 회전 적용 (총구 방향 + 로컬 X축)
-            //ikTarget.localRotation = originalRot * dirRotationOffset * xRotationOffset;
-
             // 위치 복귀
             ikTarget.localPosition = currentPos;
 
             time += Time.deltaTime;
             yield return null;
         }
-
-        // 완전히 원위치
-        //ikTarget.localPosition = originalPos;
-        //ikTarget.localRotation = originalRot;
 
         isRecoiling = false;
     }

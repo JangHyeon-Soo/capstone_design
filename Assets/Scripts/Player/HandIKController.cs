@@ -7,8 +7,6 @@ using UnityEngine.InputSystem;
 
 public class HandIKController : MonoBehaviour
 {
-
-
     public Animator animator;
     PlayerController pc;
     CharacterController controller;
@@ -47,7 +45,6 @@ public class HandIKController : MonoBehaviour
     bool IsHaveLHSocket;
 
     [Header("FootIK")]
-    //public Transform LeftFoot, RightFoot;
     public Transform LFT;
     public Transform RFT;
 
@@ -154,15 +151,22 @@ public class HandIKController : MonoBehaviour
 
     private void Update()
     {
+
         #region IK 가중치 세팅
         if (pc.isEquipping || pc.isUnequipping || pc.isReloading)
         {
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1, Time.deltaTime * 5f));
             HandWeight_L = Mathf.Lerp(HandWeight_L, 0, Time.deltaTime * 2f);
             HandWeight_R = Mathf.Lerp(HandWeight_R, 0, Time.deltaTime * 2f);
         }
 
         else
         {
+           if(pc.armState == GameManager.armState.Unarmed)
+            {
+                animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0, Time.deltaTime * 5f));
+            }
+
             HandWeight_L = Mathf.Lerp(HandWeight_L, 1, Time.deltaTime * 2f);
             HandWeight_R = Mathf.Lerp(HandWeight_R, 1, Time.deltaTime * 2f);
         } 
@@ -187,6 +191,7 @@ public class HandIKController : MonoBehaviour
 
             else
             {
+                
                 RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.deltaTime * 15f);
                 RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.deltaTime * 15f);
             }
