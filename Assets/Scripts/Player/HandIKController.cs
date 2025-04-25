@@ -148,7 +148,7 @@ public class HandIKController : MonoBehaviour
         #endregion
     }
 
-    private void Update()
+    private void LateUpdate()
     {
 
         #region IK 가중치 세팅

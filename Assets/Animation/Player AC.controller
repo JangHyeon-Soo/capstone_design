@@ -967,7 +967,7 @@ AnimatorStateMachine:
     m_Position: {x: 940, y: 2060, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3291503724871038103}
-    m_Position: {x: 1620, y: 1560, z: 0}
+    m_Position: {x: 1570, y: 1570, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1691,7 +1691,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 1
+    m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: Crouch
     m_Type: 4

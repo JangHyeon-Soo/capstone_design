@@ -35,7 +35,8 @@ public class WeaponScript : MonoBehaviour
     [Space(10)]
 
     [Header("VFX")]
-    public GameObject vfx;
+    public VisualEffect vfx;
+    public ParticleSystem muzzleFlash;
     [Space(10)]
 
     [Header("SFX")]
@@ -107,7 +108,11 @@ public class WeaponScript : MonoBehaviour
 
     public void FireEffect()
     {
-        vfx.GetComponent<VisualEffect>().Play();
+        //vfx.SetVector3("FirePosition", FirePoint.position);
+        //vfx.SetVector3("minFireDir", Quaternion.AngleAxis(-10, Vector3.up) * FirePoint.forward);
+        //vfx.SetVector3("maxFireDir", Quaternion.AngleAxis(10, Vector3.up) * FirePoint.forward);
+        //vfx.Play();
+        muzzleFlash.Play();
         //GameObject obj = Instantiate(vfx, FirePoint.position, Quaternion.LookRotation(FirePoint.forward));
     }
 

@@ -24,12 +24,16 @@ public class UserInterfaceLogic : MonoBehaviour
         inventoryAction = playerInput.actions.FindAction("Inventory");
 
         InventoryUI.SetActive(false);
+
+        InvokeRepeating("ShowFrameRate", 0, 0.2f);
     }
 
-    private void FixedUpdate()
+
+    private void ShowFrameRate()
     {
-        FPS_UI.text = "FPS : " + ((int)(1 / Time.fixedDeltaTime));
+        FPS_UI.text = "FPS : " + ((int)(1 / Time.deltaTime));
     }
+
     public void OnInventory(InputValue value)
     {
         
