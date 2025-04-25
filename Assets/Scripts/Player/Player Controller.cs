@@ -337,7 +337,7 @@ public class PlayerController : MonoBehaviour
     {
         isFireDown = value.Get<float>() == 1 ? true : false;
 
-        if (isFireDown && IsAimDown)
+        if (isFireDown )
         {
             if (armState == GameManager.armState.Pistol)
             {
