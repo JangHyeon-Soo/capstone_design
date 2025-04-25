@@ -9,9 +9,9 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "8505dfbc-b3ce-474b-bc62-1b3872afb47a",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Vector3",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {

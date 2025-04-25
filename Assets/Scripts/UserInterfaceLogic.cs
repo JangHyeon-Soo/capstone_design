@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using TMPro;
 
 public class UserInterfaceLogic : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UserInterfaceLogic : MonoBehaviour
 
     [Header("UI")]
     public GameObject InventoryUI;
+    public TMP_Text FPS_UI;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +26,10 @@ public class UserInterfaceLogic : MonoBehaviour
         InventoryUI.SetActive(false);
     }
 
+    private void FixedUpdate()
+    {
+        FPS_UI.text = "FPS : " + ((int)(1 / Time.fixedDeltaTime));
+    }
     public void OnInventory(InputValue value)
     {
         

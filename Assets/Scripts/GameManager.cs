@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
         instance = this;
     }
 
+
     public static void CursorOff()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,6 +58,8 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
+
+
 
     public static Transform FindChildRecursive(Transform parent, string childName)
     {

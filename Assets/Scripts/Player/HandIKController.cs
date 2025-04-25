@@ -77,7 +77,6 @@ public class HandIKController : MonoBehaviour
 
         else
         {
-            
             animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, HandWeight_L);
             animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, HandWeight_L);
 
@@ -198,7 +197,7 @@ public class HandIKController : MonoBehaviour
 
 
                 LHT.position = LHP_Pistol.position;
-            LHT.rotation = LHP_Pistol.rotation;
+                LHT.rotation = LHP_Pistol.rotation;
         }
 
         else if (pc.armState == GameManager.armState.Rifle)

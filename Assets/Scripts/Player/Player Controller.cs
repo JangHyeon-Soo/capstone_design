@@ -18,11 +18,11 @@ public class PlayerController : MonoBehaviour
 
     public Rig RigObject;
     Transform playerCam;
-    [Space(20)] 
+    [Space(20)]
     #endregion
     #region 이동관련 변수
     [Header("이동")]
-
+    public Rigidbody rb;
     public CharacterController controller;
     public bool isMove;
 
@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     public bool isRun;
     float moveSpeed;
     Vector3 normalizedInput;
+    public LayerMask layerMask;
     [Space(20)]
     #endregion
     #region 점프관련 변수
@@ -129,7 +130,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        
+        //rb = GetComponent<Rigidbody>();
         playerCam = playerCamera.transform; // 플레이어 카메라 세팅
         GameManager.CursorOff(); // 커서 끄기
 
@@ -155,52 +156,54 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(isVaulting) return;
-        Move(); // 이동 처리 함수
+        transform.root.position = controller.transform.position;
+        if (isVaulting) return;
+        //Move(); // 이동 처리 함수
+
+        if (!isVaulting && isGrounded)
+        {
+            
+            moveInput = moveAction.ReadValue<Vector3>();
+
+
+            Debug.Log(moveInput);
+            moveInput = isVaulting ? Vector3.zero : moveInput;
+            movement = controller.transform.forward * moveInput.z + controller.transform.right * moveInput.x;
+
+            controller.Move(movement * Time.fixedDeltaTime * moveSpeed);
+
+            //controller.Move(movement * Time.deltaTime * moveSpeed);
+
+        }
 
         #region 중력
 
-        if(!isVaulting)
+        if (!isVaulting)
         {
-            if (isJumping)
+            currentTime += Time.fixedDeltaTime;
+            if(isJumping)
             {
-                currentTime += Time.deltaTime;
-                currentVelocity = Vector3.Slerp(currentVelocity, velocity, Time.deltaTime * 60f);
-
+                currentVelocity = Vector3.Slerp(currentVelocity, velocity, Time.fixedDeltaTime * 60f);
                 currentVelocity.y += -9.81f * currentTime; // 중력 적용
-
-                if (controller.enabled)
-                    controller.Move(currentVelocity * Time.deltaTime);
-
-                if (isJumping && controller.isGrounded)
-                {
-                    isJumping = false;
-                    velocity = Vector3.zero;
-                    currentTime = 0;
-                    currentVelocity = Vector3.zero;
-                    animator.ResetTrigger("Jump");
-                }
             }
 
             else
             {
-                if(!isGrounded)
-                {
-                    currentVelocity.y += -9.81f * Time.deltaTime; // 중력 적용
+                currentVelocity.y = -2f; // 중력 적용
+            }
+            
+            
 
-                    if (controller.enabled && !isGrounded)
-                    {
-                        controller.Move(currentVelocity * Time.deltaTime);
-                    }
-                }
+            if (controller.enabled)
+                controller.Move(currentVelocity * Time.fixedDeltaTime);
 
-                if (controller.isGrounded)
-                {
-                    isJumping = false;
-                    velocity = Vector3.zero;
-                    currentVelocity = Vector3.zero;
-                    currentTime = 0;
-                }
+            if (controller.isGrounded)
+            {
+                animator.ResetTrigger("Jump");
+                isJumping = false;
+                velocity = Vector3.zero;
+                currentTime = 0;
+                currentVelocity = Vector3.zero;
             }
         }
         #endregion
@@ -235,16 +238,19 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Is Move", (moveInput.z != 0 || moveInput.x != 0) ? true : false);
         
 
+
+
         if (isMove)
         {
+            //rb.isKinematic = false;
             animator.SetBool("IsRun", isRun);
-
             animator.SetFloat("Horizontal", Mathf.Lerp(animator.GetFloat("Horizontal"), moveInput.x, Time.deltaTime * 5f));
             animator.SetFloat("Vertical", Mathf.Lerp(animator.GetFloat("Vertical"), moveInput.z, Time.deltaTime * 5f));
         }
 
         else
         {
+           // rb.isKinematic = true;
             animator.SetBool("IsRun", false);
 
             animator.SetFloat("Horizontal", 0);
@@ -292,7 +298,6 @@ public class PlayerController : MonoBehaviour
                 isVaulting = false;
                 animator.applyRootMotion = false;
                 vaultTimer = 0;
-                //controller.isTrigger = false;
             }
         }
 
@@ -389,30 +394,41 @@ public class PlayerController : MonoBehaviour
 
     #endregion
     #region 이동
-    public void Move()
+    public bool CanMove(Vector3 dir)
+    {
+        if(Physics.Raycast(transform.position + Vector3.up * 0.2f, dir, out RaycastHit hit, 0.3f, layerMask))
+        {
+            return false;
+        }
+
+        return true;
+    }
+    public void OnMove(InputValue value)
     {
         if (isVaulting) return;
 
+        //transform.parent.position = transform.position;
 
-        transform.parent.position = transform.position;
+        //moveInput = value.Get<Vector3>().normalized;
 
-        moveInput = isVaulting ? Vector3.zero : moveAction.ReadValue<Vector3>().normalized;
+        //
+        //movement.y += -9.81f * Time.deltaTime;
 
-        movement = controller.transform.forward * moveInput.z + controller.transform.right * moveInput.x;
 
-        if (!isVaulting && isGrounded)
+        if (moveInput.magnitude > 0)
         {
-            controller.Move(movement * Time.deltaTime * moveSpeed);
 
         }
+
+
+
 
 
 
     }
 
     public void OnJump(InputValue value)
-    {
-        
+    { 
         mantleCheck = MantleCheck();
 
         if (mantleCheck)
@@ -424,6 +440,9 @@ public class PlayerController : MonoBehaviour
                     animator.SetTrigger("Vault");
                     //controller.isTrigger = true;
 
+                    velocity = Vector3.zero;
+                    transform.rotation = Quaternion.LookRotation((new Vector3(mantleObject.transform.position.x, transform.position.y, mantleObject.transform.position.z) - transform.position), Vector3.up);
+                    
                     animator.applyRootMotion = true;
                     isVaulting = true;
                     Vector3 objPos = mantleObject.transform.position;
@@ -465,7 +484,7 @@ public class PlayerController : MonoBehaviour
     public bool GroundCheck()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position + Vector3.up * 0.2f, 0.2f, Vector3.down, out hit, 1f))
+        if (Physics.CheckSphere(transform.position, 0.1f, layerMask))
         {
             return true;
         }
@@ -475,11 +494,12 @@ public class PlayerController : MonoBehaviour
 
     void StartJump(Vector3 targetPos)
     {
-        startPos = transform.position;
+        startPos = controller.transform.position;
         velocity = CalculateParabolaVelocity(targetPos, arcHeight, gravity, out totalTime);
         currentTime = 0f;
         isJumping = true;
     }
+
 
     Vector3 CalculateParabolaVelocity(Vector3 targetPos, float arcHeight, float gravity, out float time)
     {
@@ -508,11 +528,11 @@ public class PlayerController : MonoBehaviour
             mantleObject = hit.transform.gameObject;
             Vector3 center = mantleObject.GetComponent<Collider>().bounds.center;
             Vector3 size = mantleObject.GetComponent<Collider>().bounds.size;
-            Vector3 result = new Vector3(hit.point.x, center.y + size.y / 2 - 1, hit.point.z);
+            Vector3 result = new Vector3(hit.point.x, center.y + size.y / 2 - 0.8f, hit.point.z);
 
             if(Mathf.Abs((center.y + size.y / 2) - transform.position.y) <= 1)
             {
-                //transform.position = result;
+                transform.position = result;
                 return true;
             }
 
