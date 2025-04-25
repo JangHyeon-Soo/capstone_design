@@ -228,7 +228,7 @@ GameObject:
   - component: {fileID: 6022342634884975936}
   - component: {fileID: 4384550333963508948}
   m_Layer: 5
-  m_Name: Button (2)
+  m_Name: Settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -485,7 +485,7 @@ GameObject:
   - component: {fileID: 2393879224448419462}
   - component: {fileID: 5556772082708945993}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Play
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -878,7 +878,7 @@ GameObject:
   - component: {fileID: 909891383017728931}
   - component: {fileID: 2684292360321788792}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: Quit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -999,7 +999,7 @@ GameObject:
   - component: {fileID: 6096562327455999590}
   - component: {fileID: 5274627477855581236}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Restart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

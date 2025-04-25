@@ -1,12 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
 public class UIManager : MonoBehaviour
 {
-    public GameObject pauseMenuUIPrefab;      
-    public Transform canvasTransform;         
-    private GameObject pauseMenuUIInstance;   
+    public GameObject pauseMenuUIPrefab;
+    public Transform canvasTransform;
+    private GameObject pauseMenuUIInstance;
     private bool isPaused = false;
+
+    private Button playButton; 
 
     void Start()
     {
@@ -17,6 +20,10 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+     
+        playButton = pauseMenuUIInstance.transform.Find("Play").GetComponent<Button>();
+        playButton.onClick.AddListener(ResumeGame);
     }
 
     void Update()
@@ -42,10 +49,11 @@ public class UIManager : MonoBehaviour
     public void PauseGame()
     {
         pauseMenuUIInstance.SetActive(true);
-        pauseMenuUIInstance.transform.localPosition = Vector3.zero; //
+        pauseMenuUIInstance.transform.localPosition = Vector3.zero;
         Time.timeScale = 0f;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         isPaused = true;
     }
 }
+
