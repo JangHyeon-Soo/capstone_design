@@ -22,7 +22,8 @@ public class WeaponScript : MonoBehaviour
     public int currentAmmo;
     public FireMode fireMode;
     public Vector3 AimPoint;
-    
+    public GameObject BulletHead;
+
     [Space(10)]
 
     [Header("Æ®·£½ºÆû")]
@@ -94,6 +95,8 @@ public class WeaponScript : MonoBehaviour
                 GetComponent<RecoilController>().ApplyRecoil();
                 currentAmmo--;
                 FireSound.PlayOneShot(FireClip);
+
+                Debug.DrawRay(FirePoint.position, FirePoint.forward * 30f, Color.red, 10f);
                 pc.GetComponent<AimOffset>().xRot += Random.Range(-0.1f, 0.3f);
                 pc.GetComponent<AimOffset>().yRot -= Random.Range(0.1f, 0.7f);
             }
