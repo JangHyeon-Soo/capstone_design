@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,7 +10,9 @@ public class UIManager : MonoBehaviour
     private GameObject pauseMenuUIInstance;
     private bool isPaused = false;
 
-    private Button playButton; 
+    private Button playButton;
+    private Button restartButton;
+    private Button quitButton;
 
     void Start()
     {
@@ -21,9 +24,14 @@ public class UIManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-     
         playButton = pauseMenuUIInstance.transform.Find("Play").GetComponent<Button>();
         playButton.onClick.AddListener(ResumeGame);
+
+        restartButton = pauseMenuUIInstance.transform.Find("Restart").GetComponent<Button>();
+        restartButton.onClick.AddListener(RestartGame);
+
+        quitButton = pauseMenuUIInstance.transform.Find("Quit").GetComponent<Button>();
+        quitButton.onClick.AddListener(QuitGame);
     }
 
     void Update()
@@ -55,5 +63,16 @@ public class UIManager : MonoBehaviour
         Cursor.visible = true;
         isPaused = true;
     }
-}
 
+    public void RestartGame()
+    {
+        pauseMenuUIInstance.SetActive(false);
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+}
