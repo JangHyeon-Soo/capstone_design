@@ -184,6 +184,7 @@ public class HandIKController : MonoBehaviour
                 LHP_Pistol = GameManager.FindChildRecursive(currentGun, "Left Hand Position");
             }
 
+
             if (pc.IsAimDown )
             {
                 RHT.position = Vector3.Lerp(RHT.position, Aim_Pistol.position, Time.smoothDeltaTime * 15f);

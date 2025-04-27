@@ -53,7 +53,7 @@ public class AimOffset : MonoBehaviour
 
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if(pc.isVaulting || !pc.InputOn) return;
 
@@ -126,8 +126,8 @@ public class AimOffset : MonoBehaviour
         else
         {
 
-            AimPoint.rotation = Quaternion.Lerp(AimPoint.rotation, Quaternion.Euler(yRot, xRot, 0), Time.deltaTime * 20f);
-            pc.controller.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, xRot, 0), Time.deltaTime * 20f);
+            AimPoint.rotation = Quaternion.Lerp(AimPoint.rotation, Quaternion.Euler(yRot, xRot, 0), Time.fixedDeltaTime * 20f);
+            pc.controller.transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, xRot, 0), Time.fixedDeltaTime * 20f);
 
 
             turn = false;

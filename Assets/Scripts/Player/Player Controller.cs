@@ -236,7 +236,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         isGrounded = GroundCheck(); // 땅 체크
-        mantleCheck = MantleCheck();
+        
 
         isMove = moveInput != Vector3.zero ? true : false;
 
@@ -308,6 +308,13 @@ public class PlayerController : MonoBehaviour
                 velocity = Vector3.zero;
                 currentVelocity = Vector3.zero;
                 animator.SetLayerWeight(1, 1);
+
+
+            }
+
+            else if(animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.60f)
+            {
+                controller.transform.position += controller.transform.forward * 0.2f;
             }
         }
 
@@ -438,9 +445,9 @@ public class PlayerController : MonoBehaviour
     }
 
     public void OnJump(InputValue value)
-    { 
+    {
 
-
+        mantleCheck = MantleCheck();
         if (mantleCheck)
         {
             if(!isVaulting)
@@ -463,7 +470,7 @@ public class PlayerController : MonoBehaviour
                         
                     }
 
-                    else if(height >= 1.8f && height < 3f)
+                    else if(height >= 1.8f && height < 2.7f)
                     {
                         isVaulting = true;
                         animator.SetTrigger("Vault_2m");
@@ -557,7 +564,7 @@ public class PlayerController : MonoBehaviour
             mantleObject = hit.transform.gameObject;
             Vector3 center = mantleObject.GetComponent<Collider>().bounds.center;
             Vector3 size = mantleObject.GetComponent<Collider>().bounds.size;
-            Vector3 result = new Vector3(transform.position.x, center.y + size.y / 2 , transform.position.z);
+            Vector3 result = new Vector3(transform.position.x, center.y + size.y / 2  + 0.2f, transform.position.z);
 
             if(Mathf.Abs((center.y + size.y / 2) - transform.position.y) <= 3)
             {

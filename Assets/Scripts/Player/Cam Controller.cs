@@ -51,7 +51,7 @@ public class CamController : MonoBehaviour
         headBone = GameManager.FindChildRecursive(playerController.playerBody, "head Cam").parent;
     }
 
-    void LateUpdate()
+    void Update()
     {
         if (!InputOn) return;
 
