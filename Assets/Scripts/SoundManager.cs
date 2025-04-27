@@ -9,13 +9,14 @@ public class SoundManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        AS_footstep = GetComponent<AudioSource>();
+        //AS_footstep = GetComponent<AudioSource>();
+        AS_footstep.clip = footstepClip;
     }
 
   
     public void Footstep()
     {
-        //if(GetComponent<PlayerController>().isMove)
-        //AS_footstep.PlayOneShot(footstepClip);
+        if (GetComponent<PlayerController>().isMove && !AS_footstep.isPlaying && GetComponent<PlayerController>().isGrounded)
+            AS_footstep.PlayOneShot(footstepClip, 3f);
     }
 }

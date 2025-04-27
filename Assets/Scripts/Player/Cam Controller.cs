@@ -51,7 +51,7 @@ public class CamController : MonoBehaviour
         headBone = GameManager.FindChildRecursive(playerController.playerBody, "head Cam").parent;
     }
 
-    void Update()
+    void LateUpdate()
     {
         if (!InputOn) return;
 
@@ -70,8 +70,11 @@ public class CamController : MonoBehaviour
                 }
                 else
                 {
-                    transform.position = Vector3.SmoothDamp(transform.position, CameraFollowTarget.position, ref currentVelocity, 0.2f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, CameraFollowTarget.rotation, Time.deltaTime * 13f);
+                    transform.position = Vector3.Lerp(transform.position, CameraFollowTarget.position, Time.deltaTime * 13f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, 
+                        playerController.isVaulting || playerController.isEquipping || playerController.isUnequipping 
+                        || playerController.isReloading || !playerController.isMove? CameraFollowTarget.rotation :Quaternion.LookRotation((aimPoint.position - transform.position).normalized)
+                        , Time.deltaTime * 13f);
                 }
 
                 break;
@@ -86,7 +89,7 @@ public class CamController : MonoBehaviour
                     CameraFollowTarget = T_tps;
                 }
 
-                transform.position = Vector3.SmoothDamp(transform.position, CameraFollowTarget.position, ref currentVelocity, 0.2f);
+                transform.position = Vector3.Lerp(transform.position, CameraFollowTarget.position, Time.deltaTime * 13f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookTarget.position - transform.position, Vector3.up), Time.deltaTime * 13f);
                 break;
         }

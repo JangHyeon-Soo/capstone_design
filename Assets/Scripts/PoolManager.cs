@@ -24,9 +24,6 @@ public class PoolManager : MonoBehaviour
     [Header("BulletPool")]
     public Dictionary<PoolingObjectType,Queue<GameObject>> Pool;
 
-    int currentIndex = 0;
-
-
     private void Start()
     {
         instance = this;

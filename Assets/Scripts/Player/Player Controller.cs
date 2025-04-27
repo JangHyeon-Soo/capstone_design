@@ -116,7 +116,6 @@ public class PlayerController : MonoBehaviour
     public GameObject point2;
     public GameObject point3;
 
-    float vaultTimer = 0;
     float duration;
 
     Vector3 vaultPosition;
@@ -128,7 +127,7 @@ public class PlayerController : MonoBehaviour
 
     GameObject mantleObject;
     Vector3 handPos;
-    [HideInInspector] public bool InputOn = true;
+    public bool InputOn = true;
     
     
     void Start()
@@ -169,15 +168,10 @@ public class PlayerController : MonoBehaviour
 
             moveInput = moveAction.ReadValue<Vector3>();
 
-
-            //Debug.Log(moveInput);
             moveInput = isVaulting ? Vector3.zero : moveInput;
             movement = controller.transform.forward * moveInput.z + controller.transform.right * moveInput.x;
 
             controller.Move(movement * Time.fixedDeltaTime * moveSpeed);
-
-            //controller.Move(movement * Time.deltaTime * moveSpeed);
-
         } 
         #endregion
         #region 중력
@@ -304,7 +298,7 @@ public class PlayerController : MonoBehaviour
             {
                 isVaulting = false;
                 animator.applyRootMotion = false;
-                vaultTimer = 0;
+
                 velocity = Vector3.zero;
                 currentVelocity = Vector3.zero;
                 animator.SetLayerWeight(1, 1);

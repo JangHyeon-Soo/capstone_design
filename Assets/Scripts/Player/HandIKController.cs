@@ -55,8 +55,8 @@ public class HandIKController : MonoBehaviour
     float HandWeight_L = 0;
     float HandWeight_R = 0; 
 
-    bool LeftHandOn, LeftHandOff;
     float timer = 0;
+
     void Start()
     {
         pc = GetComponent<PlayerController>();
@@ -148,7 +148,7 @@ public class HandIKController : MonoBehaviour
         #endregion
     }
 
-    private void LateUpdate()
+    private void Update()
     {
 
         #region IK 가중치 세팅
@@ -189,6 +189,10 @@ public class HandIKController : MonoBehaviour
             {
                 RHT.position = Vector3.Lerp(RHT.position, Aim_Pistol.position, Time.smoothDeltaTime * 15f);
                 RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Pistol.rotation, Time.smoothDeltaTime * 15f);
+
+
+                LHT.position = LHP_Pistol.position;
+                LHT.rotation = LHP_Pistol.rotation;
             }
 
             else
@@ -196,11 +200,12 @@ public class HandIKController : MonoBehaviour
                 
                 RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.smoothDeltaTime * 15f);
                 RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.smoothDeltaTime * 15f);
+
+                LHT.position = Vector3.Lerp(LHT.position, LHP_Pistol.position, Time.deltaTime * 50f);
+                LHT.rotation = Quaternion.Slerp(LHT.rotation, LHP_Pistol.rotation, Time.deltaTime * 50f);
             }
 
 
-                LHT.position = LHP_Pistol.position;
-                LHT.rotation = LHP_Pistol.rotation;
         }
 
         else if (pc.armState == GameManager.armState.Rifle)
@@ -216,17 +221,22 @@ public class HandIKController : MonoBehaviour
 
                 RHT.position = Vector3.Lerp(RHT.position, Aim_Rifle.position, Time.smoothDeltaTime * 5f); //  
                 RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Rifle.rotation, Time.smoothDeltaTime * 5f); //RHP_Pistol.rotation; 
+
+                LHT.position = LHP_Rifle.position;
+                LHT.rotation = LHP_Rifle.rotation;
             }
 
             else
             {
 
+                LHT.position = Vector3.Lerp(LHT.position ,LHP_Rifle.position, Time.deltaTime * 50f);
+                LHT.rotation = Quaternion.Slerp(LHT.rotation ,LHP_Rifle.rotation, Time.deltaTime  *50f);
+
                 RHT.position = Vector3.Lerp(RHT.position, RHP_Rifle.position, Time.smoothDeltaTime * 5f);
                 RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Rifle.rotation, Time.smoothDeltaTime * 5f);
             }
 
-            LHT.position = LHP_Rifle.position;
-            LHT.rotation = LHP_Rifle.rotation;
+
         }
 
         else
@@ -275,14 +285,25 @@ public class HandIKController : MonoBehaviour
 
     public void LeftHandIKON()
     {
-        LeftHandOn = true;
+        //float timer = 0;
+
+        //while(timer < 1)
+        //{
+        //    HandWeight_L = Mathf.Lerp(0, 1, 1 / timer);
+        //    timer += Time.deltaTime;
+        //}
     }
 
     public void LeftHandIKOff()
     {
+        //float timer = 0;
 
-        LeftHandOff = true;
+        //while (timer < 1)
+        //{
 
+        //    HandWeight_L = Mathf.Lerp(1, 0, 1 / timer);
+        //    timer += Time.deltaTime;
+        //}
     }
 
 }
