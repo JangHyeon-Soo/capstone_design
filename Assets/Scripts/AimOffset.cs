@@ -140,6 +140,10 @@ public class AimOffset : MonoBehaviour
 
     }
 
+    public void ShakeAim()
+    {
+        AimPoint.rotation = Quaternion.Euler(yRot, xRot, 0);
+    }
     public void RootMotionOn()
     {
         if(animator != null)

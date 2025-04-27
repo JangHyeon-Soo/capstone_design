@@ -118,6 +118,8 @@ public class PlayerController : MonoBehaviour
 
     float vaultTimer = 0;
     float duration;
+
+    Vector3 vaultPosition;
     [Space(10)] 
     #endregion
 
@@ -127,6 +129,7 @@ public class PlayerController : MonoBehaviour
     GameObject mantleObject;
     Vector3 handPos;
     [HideInInspector] public bool InputOn = true;
+    
     
     void Start()
     {
@@ -160,13 +163,14 @@ public class PlayerController : MonoBehaviour
         if (isVaulting) return;
         //Move(); // 이동 처리 함수
 
+        #region 이동
         if (!isVaulting && isGrounded)
         {
-            
+
             moveInput = moveAction.ReadValue<Vector3>();
 
 
-            Debug.Log(moveInput);
+            //Debug.Log(moveInput);
             moveInput = isVaulting ? Vector3.zero : moveInput;
             movement = controller.transform.forward * moveInput.z + controller.transform.right * moveInput.x;
 
@@ -174,8 +178,8 @@ public class PlayerController : MonoBehaviour
 
             //controller.Move(movement * Time.deltaTime * moveSpeed);
 
-        }
-
+        } 
+        #endregion
         #region 중력
 
         if (!isVaulting)
@@ -189,7 +193,7 @@ public class PlayerController : MonoBehaviour
 
             else
             {
-                currentVelocity.y = -2f; // 중력 적용
+                currentVelocity.y += -9.81f * Time.fixedDeltaTime; // 중력 적용
             }
             
             
@@ -201,8 +205,9 @@ public class PlayerController : MonoBehaviour
             {
                 animator.ResetTrigger("Jump");
                 isJumping = false;
-                velocity = Vector3.zero;
+
                 currentTime = 0;
+                velocity = Vector3.zero;
                 currentVelocity = Vector3.zero;
             }
         }
@@ -227,9 +232,12 @@ public class PlayerController : MonoBehaviour
 
 
 
+
     void Update()
     {
         isGrounded = GroundCheck(); // 땅 체크
+        mantleCheck = MantleCheck();
+
         isMove = moveInput != Vector3.zero ? true : false;
 
         #region Variation of Animator
@@ -288,16 +296,18 @@ public class PlayerController : MonoBehaviour
         if (isVaulting)
         {
             RigObject.weight = 0;
-            transform.root.position = controller.transform.position;
+            transform.root.position = transform.position;
+            animator.SetLayerWeight(1, 0);
+
 
             if (animator.GetCurrentAnimatorStateInfo(3).normalizedTime > 0.93f)
             {
-                controller.enabled = true;
-
-                Debug.Log("rootPosition: " + animator.deltaPosition);
                 isVaulting = false;
                 animator.applyRootMotion = false;
                 vaultTimer = 0;
+                velocity = Vector3.zero;
+                currentVelocity = Vector3.zero;
+                animator.SetLayerWeight(1, 1);
             }
         }
 
@@ -429,7 +439,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnJump(InputValue value)
     { 
-        mantleCheck = MantleCheck();
+
 
         if (mantleCheck)
         {
@@ -437,16 +447,36 @@ public class PlayerController : MonoBehaviour
             {
                 if (animator) 
                 {
-                    animator.SetTrigger("Vault");
-                    //controller.isTrigger = true;
+                    float height = GetMantleHeight();
+                    Debug.Log(height);
+                    if(height > 0 && height < 1.8)
+                    {
+                        isVaulting = true;
+                        animator.SetTrigger("Vault_1m");
 
-                    velocity = Vector3.zero;
-                    transform.rotation = Quaternion.LookRotation((new Vector3(mantleObject.transform.position.x, transform.position.y, mantleObject.transform.position.z) - transform.position), Vector3.up);
-                    
-                    animator.applyRootMotion = true;
-                    isVaulting = true;
-                    Vector3 objPos = mantleObject.transform.position;
+                        velocity = Vector3.zero;
+                        transform.rotation = Quaternion.LookRotation((new Vector3(mantleObject.transform.position.x, transform.position.y, mantleObject.transform.position.z) - transform.position), Vector3.up);
 
+                        animator.applyRootMotion = true;
+
+                        Vector3 objPos = mantleObject.transform.position;
+                        
+                    }
+
+                    else if(height >= 1.8f && height < 3f)
+                    {
+                        isVaulting = true;
+                        animator.SetTrigger("Vault_2m");
+
+                        velocity = Vector3.zero;
+                        transform.rotation = Quaternion.LookRotation((new Vector3(mantleObject.transform.position.x, transform.position.y, mantleObject.transform.position.z) - transform.position), Vector3.up);
+
+                        animator.applyRootMotion = true;
+
+                        Vector3 objPos = mantleObject.transform.position;
+                    }
+
+                    vaultPosition = transform.position + transform.forward * 0.5f + Vector3.up * height;
                 }
 
             }
@@ -483,8 +513,7 @@ public class PlayerController : MonoBehaviour
     }
     public bool GroundCheck()
     {
-        RaycastHit hit;
-        if (Physics.CheckSphere(transform.position, 0.1f, layerMask))
+        if (Physics.CheckSphere(transform.position, 0.2f, layerMask))
         {
             return true;
         }
@@ -520,19 +549,19 @@ public class PlayerController : MonoBehaviour
     {
 
         RaycastHit hit;
-        bool isHit = Physics.CapsuleCast(transform.position + transform.forward * -0.25f,
-            transform.position + new Vector3(0, controller.height, 0), 0.25f, transform.forward, out hit, 0.5f);
-        Debug.DrawRay(point1.transform.position + transform.forward * -0.25f, point1.transform.forward * 0.5f, isHit ? Color.red : Color.white, Time.deltaTime, false);
+        bool isHit = Physics.CapsuleCast(transform.position + transform.forward * -0.25f,transform.position + new Vector3(0, controller.height, 0), 0.25f, transform.forward, out hit, 0.5f);
+       
+
         if (isHit)
         {
             mantleObject = hit.transform.gameObject;
             Vector3 center = mantleObject.GetComponent<Collider>().bounds.center;
             Vector3 size = mantleObject.GetComponent<Collider>().bounds.size;
-            Vector3 result = new Vector3(hit.point.x, center.y + size.y / 2 - 0.8f, hit.point.z);
+            Vector3 result = new Vector3(transform.position.x, center.y + size.y / 2 , transform.position.z);
 
-            if(Mathf.Abs((center.y + size.y / 2) - transform.position.y) <= 1)
+            if(Mathf.Abs((center.y + size.y / 2) - transform.position.y) <= 3)
             {
-                transform.position = result;
+                //transform.position = result;
                 return true;
             }
 
@@ -544,6 +573,15 @@ public class PlayerController : MonoBehaviour
 
 
 
+    }
+
+    public float GetMantleHeight()
+    {
+        Vector3 center = mantleObject.GetComponent<Collider>().bounds.center;
+        Vector3 size = mantleObject.GetComponent<Collider>().bounds.size;
+
+
+        return (center.y + size.y / 2) - transform.position.y;
     }
     #endregion
 

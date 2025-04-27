@@ -154,20 +154,22 @@ public class HandIKController : MonoBehaviour
         #region IK 가중치 세팅
         if (pc.isEquipping || pc.isUnequipping || pc.isReloading)
         {
-            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1, Time.deltaTime * 5f));
-            HandWeight_L = Mathf.Lerp(HandWeight_L, 0, Time.deltaTime * 2f);
-            HandWeight_R = Mathf.Lerp(HandWeight_R, 0, Time.deltaTime * 2f);
+            animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 1, Time.smoothDeltaTime * 5f));
+            HandWeight_L = Mathf.Lerp(HandWeight_L, 0, Time.smoothDeltaTime * 2f);
+            HandWeight_R = Mathf.Lerp(HandWeight_R, 0, Time.smoothDeltaTime * 2f);
+
+
         }
 
         else
         {
            if(pc.armState == GameManager.armState.Unarmed)
             {
-                animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0, Time.deltaTime * 5f));
+                animator.SetLayerWeight(1, Mathf.Lerp(animator.GetLayerWeight(1), 0, Time.smoothDeltaTime * 5f));
             }
 
-            HandWeight_L = Mathf.Lerp(HandWeight_L, 1, Time.deltaTime * 2f);
-            HandWeight_R = Mathf.Lerp(HandWeight_R, 1, Time.deltaTime * 2f);
+            HandWeight_L = Mathf.Lerp(HandWeight_L, 1, Time.smoothDeltaTime * 2f);
+            HandWeight_R = Mathf.Lerp(HandWeight_R, 1, Time.smoothDeltaTime * 2f);
         } 
 
       
@@ -184,15 +186,15 @@ public class HandIKController : MonoBehaviour
 
             if (pc.IsAimDown )
             {
-                RHT.position = Vector3.Lerp(RHT.position, Aim_Pistol.position, Time.deltaTime * 15f);
-                RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Pistol.rotation, Time.deltaTime * 15f);
+                RHT.position = Vector3.Lerp(RHT.position, Aim_Pistol.position, Time.smoothDeltaTime * 15f);
+                RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Pistol.rotation, Time.smoothDeltaTime * 15f);
             }
 
             else
             {
                 
-                RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.deltaTime * 15f);
-                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.deltaTime * 15f);
+                RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.smoothDeltaTime * 15f);
+                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.smoothDeltaTime * 15f);
             }
 
 
@@ -211,15 +213,15 @@ public class HandIKController : MonoBehaviour
             if (pc.IsAimDown)
             {
 
-                RHT.position = Vector3.Lerp(RHT.position, Aim_Rifle.position, Time.deltaTime * 5f); //  
-                RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Rifle.rotation, Time.deltaTime * 5f); //RHP_Pistol.rotation; 
+                RHT.position = Vector3.Lerp(RHT.position, Aim_Rifle.position, Time.smoothDeltaTime * 5f); //  
+                RHT.rotation = Quaternion.Slerp(RHT.rotation, Aim_Rifle.rotation, Time.smoothDeltaTime * 5f); //RHP_Pistol.rotation; 
             }
 
             else
             {
 
-                RHT.position = Vector3.Lerp(RHT.position, RHP_Rifle.position, Time.deltaTime * 5f);
-                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Rifle.rotation, Time.deltaTime * 5f);
+                RHT.position = Vector3.Lerp(RHT.position, RHP_Rifle.position, Time.smoothDeltaTime * 5f);
+                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Rifle.rotation, Time.smoothDeltaTime * 5f);
             }
 
             LHT.position = LHP_Rifle.position;

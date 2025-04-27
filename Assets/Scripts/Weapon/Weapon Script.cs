@@ -15,15 +15,16 @@ public class WeaponScript : MonoBehaviour
 
 
     public PlayerController pc;
+    public GameObject Bullet;
+    public GameObject Shell;
 
     [Header("무기 설정")]
+    public PoolManager.PoolingObjectType bulletPooingType;
     public bool isequipped;
     public int MagzCapacity;
     public int currentAmmo;
     public FireMode fireMode;
     public Vector3 AimPoint;
-    public GameObject BulletHead;
-
     [Space(10)]
 
     [Header("트랜스폼")]
@@ -43,6 +44,8 @@ public class WeaponScript : MonoBehaviour
     [Header("SFX")]
     public AudioSource FireSound;
     public AudioClip FireClip;
+
+
     private void Start()
     {
         if (gameObject.tag != "Player") return;
@@ -85,20 +88,30 @@ public class WeaponScript : MonoBehaviour
                 break;
         }
     }
-
     public void Fire()
     {
         if(currentAmmo > 0)
         {
             if(GetComponent<RecoilController>().isRecoiling == false)
             {
-                GetComponent<RecoilController>().ApplyRecoil();
+                // 반동 적용
+                GetComponent<RecoilController>().ApplyRecoil(); 
+
+                // 탄창 갱신
                 currentAmmo--;
-                FireSound.PlayOneShot(FireClip);
+
+                //소리
+                FireSound.PlayOneShot(FireClip); 
+
+                // 탄 풀링
+                PoolManager.instance.Instantiate(Bullet, FirePoint.position, Quaternion.LookRotation(FirePoint.forward), bulletPooingType); 
+
 
                 Debug.DrawRay(FirePoint.position, FirePoint.forward * 30f, Color.red, 10f);
                 pc.GetComponent<AimOffset>().xRot += Random.Range(-0.1f, 0.3f);
                 pc.GetComponent<AimOffset>().yRot -= Random.Range(0.1f, 0.7f);
+
+                pc.GetComponent<AimOffset>().ShakeAim();
             }
             
         }
