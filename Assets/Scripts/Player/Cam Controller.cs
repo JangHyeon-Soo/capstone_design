@@ -92,6 +92,11 @@ public class CamController : MonoBehaviour
                 transform.position = Vector3.Lerp(transform.position, CameraFollowTarget.position, Time.deltaTime * 13f);
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookTarget.position - transform.position, Vector3.up), Time.deltaTime * 13f);
                 break;
+
+            case GameManager.CameraMode.Puzzle:
+
+
+                break;
         }
 
         // 카메라 흔들기 적용 (부드럽게)

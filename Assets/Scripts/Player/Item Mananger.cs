@@ -15,7 +15,5 @@ public class ItemMananger : MonoBehaviour
     public void SetTag(string Tag)
     {
         gameObject.tag = Tag;
-
-        //Debug.Log(gameObject.layer);
     }
 }

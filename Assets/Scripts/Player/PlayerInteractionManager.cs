@@ -37,10 +37,12 @@ public class PlayerInteractionManager : MonoBehaviour
         ray.direction = playerCamera.transform.forward;
         
         bool isHit = Physics.Raycast(ray.origin, playerCamera.transform.forward, out hit, rayDistance, interactionLayer);
-        if(isHit && hit.transform.GetComponent<ItemMananger>())
+        Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
+
+        if (isHit)
         {
             interactionObject = hit.transform.gameObject;
-            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]"; 
+            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
         }
 
         else
@@ -50,7 +52,18 @@ public class PlayerInteractionManager : MonoBehaviour
 
         }
 
-        Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
+        //Component comp = hit.transform.GetComponent<ItemMananger>();
+        //switch (comp)
+        //{
+        //    case ItemMananger:
+
+        //    break;
+
+        //}
+
+
+
+        
         
     }
 
@@ -58,19 +71,18 @@ public class PlayerInteractionManager : MonoBehaviour
     {
         if (interactionObject == null) return;
 
-        
-
-        switch (interactionObject.GetComponent<ItemMananger>().item.itemType)
+        switch (interactionObject.layer)
         {
-            case GameManager.ItemType.Weapon:
-                
+            case 3:
+                inventoryManager.AddItemToInventory(interactionObject.GetComponent<ItemMananger>().item);
+                Destroy(interactionObject);
+                interactionObject = null;
+
+                break;
+
+            case 11:
+
                 break;
         }
-
-
-        inventoryManager.AddItemToInventory(interactionObject.GetComponent<ItemMananger>().item);
-        Destroy(interactionObject);
-        interactionObject = null;
-
     }
 }

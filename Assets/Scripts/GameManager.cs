@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
     {
         FPS,
         TPS,
-        Bodycam
+        Bodycam,
+        Puzzle
     }
     [System.Serializable]
     public enum armState
