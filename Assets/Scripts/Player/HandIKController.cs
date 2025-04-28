@@ -198,8 +198,8 @@ public class HandIKController : MonoBehaviour
             else
             {
                 
-                RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.smoothDeltaTime * 15f);
-                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.smoothDeltaTime * 15f);
+                RHT.position = Vector3.Lerp(RHT.position, RHP_Pistol.position, Time.smoothDeltaTime * 5f);
+                RHT.rotation = Quaternion.Slerp(RHT.rotation, RHP_Pistol.rotation, Time.smoothDeltaTime * 5f);
 
                 LHT.position = Vector3.Lerp(LHT.position, LHP_Pistol.position, Time.deltaTime * 50f);
                 LHT.rotation = Quaternion.Slerp(LHT.rotation, LHP_Pistol.rotation, Time.deltaTime * 50f);
