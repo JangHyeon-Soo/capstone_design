@@ -15,6 +15,7 @@ public class UserInterfaceLogic : MonoBehaviour
     [Header("UI")]
     public GameObject InventoryUI;
     public TMP_Text FPS_UI;
+    public TMP_Text PadLockUI;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -28,6 +29,22 @@ public class UserInterfaceLogic : MonoBehaviour
         InvokeRepeating("ShowFrameRate", 0, 0.2f);
     }
 
+    private void Update()
+    {
+        switch (pc.cameraMode)
+        {
+            case GameManager.CameraMode.FPS:
+                GetComponent<UserInterfaceLogic>().PadLockUI.text = "";
+
+                break;
+
+            case GameManager.CameraMode.PadLock:
+
+                GetComponent<UserInterfaceLogic>().PadLockUI.text = "³ª°¡±â [" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+                break;
+        }
+
+    }
 
     private void ShowFrameRate()
     {

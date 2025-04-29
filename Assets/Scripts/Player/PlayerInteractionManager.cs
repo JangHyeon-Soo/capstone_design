@@ -37,50 +37,106 @@ public class PlayerInteractionManager : MonoBehaviour
         switch (pc.cameraMode)
         {
             case GameManager.CameraMode.FPS:
-
+                GetComponent<UserInterfaceLogic>().PadLockUI.text = "";
+                #region 화면중심 레이캐스트
                 Ray ray = playerCamera.ScreenPointToRay(center);
                 ray.direction = playerCamera.transform.forward;
                 RaycastHit[] hit = Physics.RaycastAll(ray.origin, playerCamera.transform.forward, rayDistance, interactionLayer);
 
 
                 bool isHit = hit.Length > 0;
-                Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
+                Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white); 
+                #endregion
 
                 if (isHit)
                 {
-                    interactionObject = hit[0].transform.gameObject;
+                    #region InteractionObject 검출
+                    if (hit.Length == 1)
+                    {
+                        interactionObject = hit[0].transform.gameObject;
+                    }
 
+                    else
+                    {
+                        foreach (var item in hit)
+                        {
+                            if ((item.transform.GetComponent<ChestController>() != null && !item.transform.GetComponent<ChestController>().isOpen)
+                                || (item.transform.GetComponentInParent<ChestController>() != null && !item.transform.GetComponentInParent<ChestController>().isOpen))
+                            {
+
+                                interactionObject = item.transform.gameObject;
+                                break;
+                            }
+
+                            else if (item.transform.GetComponent<PadLockController>())
+                            {
+                                interactionObject = item.transform.gameObject;
+                                break;
+                            }
+
+                            else if (item.transform.GetComponent<ItemMananger>())
+                            {
+                                interactionObject = item.transform.gameObject;
+                                break;
+                            }
+                        }
+                    } 
+                    #endregion
+                    #region InteractionMessage
+                    if(interactionObject == null) return;
                     switch (interactionObject.layer)
                     {
                         case 3:
-                            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+                            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "] 를 눌러 아이템 획득";
                             break;
 
                         case 11:
-                            if(pc.cameraMode != GameManager.CameraMode.PadLock)
+                            if (pc.cameraMode != GameManager.CameraMode.PadLock)
                             {
                                 interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "] 를 눌러 자물쇠 확인";
                             }
 
                             else
                             {
-
+                                interactionText.text = "";
                             }
-                                break;
-                    }
+                            break;
 
+                        case 12:
+                            if (interactionObject.GetComponent<ChestController>() != null && interactionObject.GetComponent<ChestController>().Lock)
+                            {
 
+                                interactionText.text = "잠겨있음";
+                            }
+
+                            else if(interactionObject.GetComponentInParent<ChestController>() != null && interactionObject.GetComponentInParent<ChestController>().Lock)
+                            {
+                                interactionText.text = "잠겨있음";
+                            }
+                            else
+                            {
+                                interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "] 를 눌러 박스 열기/닫기";
+                            }
+
+                            break;
+
+                    } 
+                    #endregion
                 }
 
                 else
                 {
-                    interactionObject = null;
-                    interactionText.text = "";
+                    if(pc.cameraMode == GameManager.CameraMode.FPS)
+                    {
+                        interactionObject = null;
+                        interactionText.text = "";
+                    }
 
                 }
                 break;
 
             case GameManager.CameraMode.PadLock:
+
 
                 Ray ray1 = pc.playerCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit[] hits = Physics.RaycastAll(ray1.origin, ray1.direction, 3f);
@@ -138,6 +194,20 @@ public class PlayerInteractionManager : MonoBehaviour
 
                 pc.cameraMode = GameManager.CameraMode.PadLock;
                 GameManager.CursorOn();
+
+                break;
+
+            case 12:
+
+                if(interactionObject.GetComponent<ChestController>() != null)
+                {
+                    interactionObject.GetComponent<ChestController>().DoorOpen();
+                }
+
+                else if (interactionObject.GetComponentInParent<ChestController>() != null )
+                {
+                    interactionObject.GetComponentInParent<ChestController>().DoorOpen();
+                }
 
                 break;
         }

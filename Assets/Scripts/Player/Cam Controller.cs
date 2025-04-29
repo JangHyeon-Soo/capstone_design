@@ -100,12 +100,11 @@ public class CamController : MonoBehaviour
 
                 if(pim.interactionObject != null)
                 {
-
-
+                    transform.position = Vector3.Lerp(transform.position, pim.interactionObject.GetComponent<PadLockController>().camPosition.position, Time.deltaTime * 5f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation,
+                        Quaternion.LookRotation((pim.interactionObject.transform.position - transform.position).normalized), Time.deltaTime * 5f);
                 }
-                transform.position = Vector3.Lerp(transform.position, pim.interactionObject.GetComponent<PadLockController>().camPosition.position, Time.deltaTime * 5f);
-                transform.rotation = Quaternion.Slerp(transform.rotation,
-                    Quaternion.LookRotation((pim.interactionObject.transform.position - transform.position).normalized), Time.deltaTime * 5f);
+
                 break;
         }
 

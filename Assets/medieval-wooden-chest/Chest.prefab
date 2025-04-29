@@ -73,7 +73,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7873728922999949292}
   - component: {fileID: 4324834027854339941}
-  - component: {fileID: 8518215042103044515}
   m_Layer: 12
   m_Name: WoodenChest
   m_TagString: Untagged
@@ -155,28 +154,6 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.0042605093, y: 0.000013154931, z: 0.00021336635}
     m_Extent: {x: 0.0042767534, y: 0.006127218, z: 0.004072639}
   m_DirtyAABB: 0
---- !u!64 &8518215042103044515
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4633282123803454515}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 2113178010413197874, guid: c5cbcec2eb70e404d9bd4613c940ba00, type: 3}
 --- !u!1 &5869080513901539767
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +229,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1276740369245493848}
   - component: {fileID: 5135743934216174284}
-  m_Layer: 0
+  - component: {fileID: 538441727252141033}
+  - component: {fileID: 9137357089129701135}
+  - component: {fileID: 1958720866445729047}
+  - component: {fileID: 2281519707686921099}
+  m_Layer: 12
   m_Name: Chest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -288,6 +269,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 065d37d17ef00524f9da4922b1b2b0b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ChestDoor: {fileID: 4712806478610950521}
+  Lock: 1
+  isOpen: 0
+--- !u!65 &538441727252141033
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933477636850771177}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2, y: 0.5179715, z: 0.062589094}
+  m_Center: {x: 0.0000000018961912, y: 0.26039326, z: 0.31763604}
+--- !u!65 &9137357089129701135
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933477636850771177}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.2, y: 0.5179715, z: 0.08336402}
+  m_Center: {x: -0.0000000022312698, y: 0.26039326, z: -0.35728255}
+--- !u!65 &1958720866445729047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933477636850771177}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.07325743, y: 0.52190703, z: 0.6220743}
+  m_Center: {x: 0.5457803, y: 0.26027778, z: -0.0058080773}
+--- !u!65 &2281519707686921099
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933477636850771177}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.10569952, y: 0.51195294, z: 0.6220743}
+  m_Center: {x: -0.5390812, y: 0.26853576, z: 0.000000059561984}
 --- !u!1001 &2563377162675100811
 PrefabInstance:
   m_ObjectHideFlags: 0

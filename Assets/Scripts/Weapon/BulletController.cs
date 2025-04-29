@@ -24,9 +24,6 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        Debug.LogWarning($"[DESTROY TRACE] {gameObject.name} 이 삭제됨! (시간: {Time.time}) 스택트레이스: {Environment.StackTrace}");
-    }
+
 
 }

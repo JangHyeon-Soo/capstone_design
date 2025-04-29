@@ -38,7 +38,8 @@ public class PadLockController : MonoBehaviour
 
             transform.localEulerAngles = new Vector3(Random.Range(25, 60), Random.Range(20, 60), Random.Range(20, 60));
             gameObject.layer = 2;
-
+            GetComponentInParent<ChestController>().LockUnlock();
+            transform.SetParent(null);
             this.enabled = false;
 
 
