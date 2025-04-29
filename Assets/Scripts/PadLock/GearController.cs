@@ -23,9 +23,6 @@ public class GearController : MonoBehaviour
 
             transform.localEulerAngles = Vector3.Lerp(startRot, targetRot, t);
 
-
-
-
         }
 
         isTurning = false;

@@ -37,17 +37,39 @@ public class PlayerInteractionManager : MonoBehaviour
         switch (pc.cameraMode)
         {
             case GameManager.CameraMode.FPS:
-                RaycastHit hit;
+
                 Ray ray = playerCamera.ScreenPointToRay(center);
                 ray.direction = playerCamera.transform.forward;
+                RaycastHit[] hit = Physics.RaycastAll(ray.origin, playerCamera.transform.forward, rayDistance, interactionLayer);
 
-                bool isHit = Physics.Raycast(ray.origin, playerCamera.transform.forward, out hit, rayDistance, interactionLayer);
+
+                bool isHit = hit.Length > 0;
                 Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
 
                 if (isHit)
                 {
-                    interactionObject = hit.transform.gameObject;
-                    interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+                    interactionObject = hit[0].transform.gameObject;
+
+                    switch (interactionObject.layer)
+                    {
+                        case 3:
+                            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+                            break;
+
+                        case 11:
+                            if(pc.cameraMode != GameManager.CameraMode.PadLock)
+                            {
+                                interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "] 를 눌러 자물쇠 확인";
+                            }
+
+                            else
+                            {
+
+                            }
+                                break;
+                    }
+
+
                 }
 
                 else
@@ -60,24 +82,28 @@ public class PlayerInteractionManager : MonoBehaviour
 
             case GameManager.CameraMode.PadLock:
 
-                //Debug.Log(Input.mousePosition);
                 Ray ray1 = pc.playerCamera.ScreenPointToRay(Input.mousePosition);
+                RaycastHit[] hits = Physics.RaycastAll(ray1.origin, ray1.direction, 3f);
+                bool isHit1 = hits.Length > 0;
 
-                bool isHit1 = Physics.Raycast(ray1.origin, ray1.direction, out RaycastHit hit1, 3f, 12);
-                Debug.DrawRay(ray1.origin, ray1.direction,Color.green);
-                //isHit1 = hit1.transform.gameObject.GetComponent<GearController>();
-                Debug.Log(isHit1);
-                
-
-                if(isHit1)
+                foreach(var i in hits)
                 {
-                    if(hit1.transform.gameObject.GetComponent<GearController>() != null)
+                    if(i.transform.gameObject.tag.Equals("PadLockGear"))
                     {
-                        if(Input.GetMouseButtonDown(0))
+                        interactionText.text = "";
+
+                        if (Input.GetMouseButtonDown(0))
                         {
-                            hit1.transform.gameObject.GetComponent<GearController>().Turn();
+                            i.transform.gameObject.GetComponent<GearController>().Turn();
+                        }
+
+                        if (interactionObject.GetComponent<PadLockController>().Lock == false)
+                        {
+                            pc.cameraMode = GameManager.CameraMode.FPS;
+                            GameManager.CursorOff();
                         }
                     }
+
                 }
 
                 break;
@@ -108,6 +134,7 @@ public class PlayerInteractionManager : MonoBehaviour
             case 11:
 
                 if (pc.cameraMode == GameManager.CameraMode.PadLock) return;
+
 
                 pc.cameraMode = GameManager.CameraMode.PadLock;
                 GameManager.CursorOn();

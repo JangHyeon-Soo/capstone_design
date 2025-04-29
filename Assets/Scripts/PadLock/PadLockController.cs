@@ -14,12 +14,6 @@ public class PadLockController : MonoBehaviour
     public int firstGearVal, secondGearVal, thirdGearVal;
     public int currentValue = 0;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -30,12 +24,24 @@ public class PadLockController : MonoBehaviour
             thirdGearVal = Mathf.RoundToInt((ThirdGear.localRotation.eulerAngles.y % 360) / 36);
 
             currentValue = firstGearVal * 100 + secondGearVal * 10 + thirdGearVal;
-            Debug.Log(currentValue);
+            
 
             if(currentValue == Password)
             {
                 Lock = false;
             }
+        }
+
+        else
+        {
+            gameObject.AddComponent<Rigidbody>();
+
+            transform.localEulerAngles = new Vector3(Random.Range(25, 60), Random.Range(20, 60), Random.Range(20, 60));
+            gameObject.layer = 2;
+
+            this.enabled = false;
+
+
         }
 
 

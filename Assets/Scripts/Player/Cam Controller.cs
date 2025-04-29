@@ -56,7 +56,7 @@ public class CamController : MonoBehaviour
 
     void LateUpdate()
     {
-        if (!InputOn) return;
+        //if (!InputOn) return;
 
         switch (playerController.cameraMode)
         {
@@ -120,6 +120,7 @@ public class CamController : MonoBehaviour
         //}
     }
 
+    #region Camera Shake
     // 카메라 흔들기 시작
     public void StartCameraShake(float duration, float magnitude, float frequency)
     {
@@ -137,7 +138,8 @@ public class CamController : MonoBehaviour
         shakeDuration = 0f;
         transform.position = shakeOriginPosition;
         transform.rotation = shakeOriginRotation;
-    }
+    } 
+    #endregion
 
     public void OnLook(InputValue value)
     {
