@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteractionManager : MonoBehaviour
 {
+    PlayerController pc;
     public InventoryManager inventoryManager;
 
     public Camera playerCamera;
@@ -24,6 +25,7 @@ public class PlayerInteractionManager : MonoBehaviour
         // 상호작용 인풋
         playerInput = GetComponent<PlayerInput>();
         IAinput = playerInput.actions.FindAction("Interaction");
+        pc = GetComponent<PlayerController>();
 
         if (inventoryManager == null) GetComponent<InventoryManager>();
 
@@ -32,43 +34,66 @@ public class PlayerInteractionManager : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
-        Ray ray = playerCamera.ScreenPointToRay(center);
-        ray.direction = playerCamera.transform.forward;
-        
-        bool isHit = Physics.Raycast(ray.origin, playerCamera.transform.forward, out hit, rayDistance, interactionLayer);
-        Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
-
-        if (isHit)
+        switch (pc.cameraMode)
         {
-            interactionObject = hit.transform.gameObject;
-            interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+            case GameManager.CameraMode.FPS:
+                RaycastHit hit;
+                Ray ray = playerCamera.ScreenPointToRay(center);
+                ray.direction = playerCamera.transform.forward;
+
+                bool isHit = Physics.Raycast(ray.origin, playerCamera.transform.forward, out hit, rayDistance, interactionLayer);
+                Debug.DrawRay(ray.origin, playerCamera.transform.forward * rayDistance, isHit ? Color.red : Color.white);
+
+                if (isHit)
+                {
+                    interactionObject = hit.transform.gameObject;
+                    interactionText.text = "[" + playerInput.actions.FindAction("Interaction").bindings[0].path.Split('/')[1].ToUpper() + "]";
+                }
+
+                else
+                {
+                    interactionObject = null;
+                    interactionText.text = "";
+
+                }
+                break;
+
+            case GameManager.CameraMode.PadLock:
+
+                //Debug.Log(Input.mousePosition);
+                Ray ray1 = pc.playerCamera.ScreenPointToRay(Input.mousePosition);
+
+                bool isHit1 = Physics.Raycast(ray1.origin, ray1.direction, out RaycastHit hit1, 3f, 12);
+                Debug.DrawRay(ray1.origin, ray1.direction,Color.green);
+                //isHit1 = hit1.transform.gameObject.GetComponent<GearController>();
+                Debug.Log(isHit1);
+                
+
+                if(isHit1)
+                {
+                    if(hit1.transform.gameObject.GetComponent<GearController>() != null)
+                    {
+                        if(Input.GetMouseButtonDown(0))
+                        {
+                            hit1.transform.gameObject.GetComponent<GearController>().Turn();
+                        }
+                    }
+                }
+
+                break;
         }
 
-        else
-        {
-            interactionObject = null;
-            interactionText.text = "";
 
-        }
-
-        //Component comp = hit.transform.GetComponent<ItemMananger>();
-        //switch (comp)
-        //{
-        //    case ItemMananger:
-
-        //    break;
-
-        //}
-
-
-
-        
-        
     }
 
     public void OnInteraction(InputValue value)
     {
+        if(pc.cameraMode == GameManager.CameraMode.PadLock)
+        {
+            pc.cameraMode = GameManager.CameraMode.FPS;
+            GameManager.CursorOff();
+            return;
+        }
         if (interactionObject == null) return;
 
         switch (interactionObject.layer)
@@ -81,6 +106,11 @@ public class PlayerInteractionManager : MonoBehaviour
                 break;
 
             case 11:
+
+                if (pc.cameraMode == GameManager.CameraMode.PadLock) return;
+
+                pc.cameraMode = GameManager.CameraMode.PadLock;
+                GameManager.CursorOn();
 
                 break;
         }

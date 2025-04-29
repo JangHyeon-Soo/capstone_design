@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
         FPS,
         TPS,
         Bodycam,
-        Puzzle
+        PadLock
     }
     [System.Serializable]
     public enum armState

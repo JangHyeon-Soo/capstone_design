@@ -55,7 +55,7 @@ public class AimOffset : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(pc.isVaulting || !pc.InputOn || pc.cameraMode == GameManager.CameraMode.Puzzle) return;
+        if(pc.isVaulting || !pc.InputOn || pc.cameraMode == GameManager.CameraMode.PadLock) return;
 
         Vector3 aimDir = AimPoint.forward;
         aimDir.y = 0;

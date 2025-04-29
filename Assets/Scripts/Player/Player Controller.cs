@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         transform.root.position = controller.transform.position;
-        if (isVaulting) return;
+        if (isVaulting || cameraMode == GameManager.CameraMode.PadLock) return;
         //Move(); // 이동 처리 함수
 
         #region 이동

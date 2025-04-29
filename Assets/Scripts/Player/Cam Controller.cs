@@ -3,8 +3,10 @@ using UnityEngine.InputSystem;
 
 public class CamController : MonoBehaviour
 {
+    [Header("스크립트")]
     public PlayerController playerController; //플레이어 컨트롤러
-    public Transform headBone;
+
+    public PlayerInteractionManager pim;
 
     public Transform CameraFollowTarget; // 카메라가 따라갈 타겟 오브젝트
     public Transform lookTarget;
@@ -13,7 +15,7 @@ public class CamController : MonoBehaviour
     public Transform T_tps;
 
     public Transform aimPoint;
-    public GameManager.CameraMode cameraMode;
+
 
     [Space(10)]
     [Header("TPS")]
@@ -48,7 +50,8 @@ public class CamController : MonoBehaviour
         playerInput = playerController.transform.GetComponent<PlayerInput>();
         lookAction = playerInput.actions.FindAction("Look");
 
-        headBone = GameManager.FindChildRecursive(playerController.playerBody, "head Cam").parent;
+        //headBone = GameManager.FindChildRecursive(playerController.playerBody, "head Cam").parent;
+        pim =transform.root.GetComponentInChildren<PlayerInteractionManager>();
     }
 
     void LateUpdate()
@@ -93,21 +96,28 @@ public class CamController : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(lookTarget.position - transform.position, Vector3.up), Time.deltaTime * 13f);
                 break;
 
-            case GameManager.CameraMode.Puzzle:
+            case GameManager.CameraMode.PadLock:
+
+                if(pim.interactionObject != null)
+                {
 
 
+                }
+                transform.position = Vector3.Lerp(transform.position, pim.interactionObject.GetComponent<PadLockController>().camPosition.position, Time.deltaTime * 5f);
+                transform.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.LookRotation((pim.interactionObject.transform.position - transform.position).normalized), Time.deltaTime * 5f);
                 break;
         }
 
-        // 카메라 흔들기 적용 (부드럽게)
-        if (shakeDuration > 0)
-        {
-            Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
-            transform.position = Vector3.SmoothDamp(transform.position, shakeOriginPosition + shakeOffset, ref shakeVelocity, shakeDecay);
-            transform.rotation = Quaternion.Slerp(transform.rotation, shakeOriginRotation * Quaternion.Euler(shakeOffset * shakeMagnitude), Time.deltaTime * 5f);
+        //// 카메라 흔들기 적용 (부드럽게)
+        //if (shakeDuration > 0)
+        //{
+        //    Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
+        //    transform.position = Vector3.SmoothDamp(transform.position, shakeOriginPosition + shakeOffset, ref shakeVelocity, shakeDecay);
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, shakeOriginRotation * Quaternion.Euler(shakeOffset * shakeMagnitude), Time.deltaTime * 5f);
 
-            shakeDuration -= Time.deltaTime * shakeFrequency;
-        }
+        //    shakeDuration -= Time.deltaTime * shakeFrequency;
+        //}
     }
 
     // 카메라 흔들기 시작

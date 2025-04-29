@@ -7,6 +7,7 @@ TagManager:
   - WeaponSocket
   - PistolSocket
   - RifleSocket
+  - PadLockGear
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Envrionment
   - PlayerHead
   - PlayerBody
-  - Puzzle
+  - PadLock
   - 
   - 
   - 
