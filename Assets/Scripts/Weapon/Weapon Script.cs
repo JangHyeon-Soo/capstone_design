@@ -20,6 +20,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("¹«±â ¼³Á¤")]
     public PoolManager.PoolingObjectType bulletPooingType;
+    public PoolManager.PoolingObjectType shellPoolingType;
     public bool isequipped;
     public int MagzCapacity;
     public int currentAmmo;
@@ -29,6 +30,7 @@ public class WeaponScript : MonoBehaviour
 
     [Header("Æ®·£½ºÆû")]
     public Transform FirePoint;
+    public Transform shellEjection;
     public Transform AimSocket;
     public Transform Mags;
     public Transform MagsPrefab;
@@ -104,7 +106,15 @@ public class WeaponScript : MonoBehaviour
                 FireSound.PlayOneShot(FireClip); 
 
                 // Åº Ç®¸µ
-                PoolManager.instance.Instantiate(Bullet, FirePoint.position, Quaternion.LookRotation(FirePoint.forward), bulletPooingType); 
+                PoolManager.instance.Instantiate(Bullet, FirePoint.position, Quaternion.LookRotation(FirePoint.forward), bulletPooingType);
+
+                // ÅºÇÇ Ç®¸µ
+                if(shellEjection != null)
+                {
+                    GameObject shell = PoolManager.instance.Instantiate(Shell, shellEjection.position + shellEjection.forward * 0.02f, Quaternion.identity, shellPoolingType);
+                    shell.GetComponent<Rigidbody>().AddForce(new Vector3(3000, 3000, 3000), ForceMode.Force);
+
+                }
 
 
                 Debug.DrawRay(FirePoint.position, FirePoint.forward * 30f, Color.red, 10f);

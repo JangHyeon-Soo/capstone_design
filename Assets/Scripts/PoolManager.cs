@@ -9,7 +9,9 @@ public class PoolManager : MonoBehaviour
     public enum PoolingObjectType
     {
         Bullet_556,
-        Bullet_9mm
+        Bullet_9mm,
+        Shell_556,
+        Shell_9mm
     }
     [System.Serializable]
     public class PoolClass
@@ -33,7 +35,7 @@ public class PoolManager : MonoBehaviour
 
     }
 
-    public void Instantiate(GameObject obj, Vector3 position, Quaternion rotation, PoolingObjectType poolingObjectType)
+    public GameObject Instantiate(GameObject obj, Vector3 position, Quaternion rotation, PoolingObjectType poolingObjectType)
     {
         if(Pool.ContainsKey(poolingObjectType))
         {
@@ -41,6 +43,8 @@ public class PoolManager : MonoBehaviour
             {
                 GameObject createdObject = Instantiate(obj, position, rotation, managedObjects.transform);
                 Pool[poolingObjectType].Enqueue(createdObject);
+
+                return createdObject;
             }
 
             else
@@ -51,7 +55,8 @@ public class PoolManager : MonoBehaviour
                 lastObject.transform.position = position;
                 lastObject.transform.rotation = rotation;
                 Pool[poolingObjectType].Enqueue(lastObject);
-                
+
+                return lastObject;
 
             }
 
@@ -65,6 +70,8 @@ public class PoolManager : MonoBehaviour
             GameObject createdObject = Instantiate(obj, position, rotation, managedObjects.transform);
             Pool[poolingObjectType].Enqueue(createdObject);
             Debug.Log(Pool[poolingObjectType].Count);
+
+            return createdObject;
         }
     }
 

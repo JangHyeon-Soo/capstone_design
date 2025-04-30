@@ -416,6 +416,65 @@ Transform:
   m_Children: []
   m_Father: {fileID: 9215572803391766953}
   m_LocalEulerAnglesHint: {x: 79.171, y: -90, z: 0}
+--- !u!1 &7290392000118972800
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1578557905149411197}
+  - component: {fileID: 4892629695412300405}
+  m_Layer: 3
+  m_Name: Shell Ejection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1578557905149411197
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290392000118972800}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.18301266, y: -0.18301205, z: 0.6830141, w: 0.6830116}
+  m_LocalPosition: {x: 0.053599704, y: -0.07020054, z: 0.11440183}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9215572803391766953}
+  m_LocalEulerAnglesHint: {x: 0, y: -30, z: 90}
+--- !u!54 &4892629695412300405
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290392000118972800}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7385454046366594374
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,6 +514,7 @@ Transform:
   - {fileID: 5857553658824968797}
   - {fileID: 5058908923017066571}
   - {fileID: 6793274590428094017}
+  - {fileID: 1578557905149411197}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!54 &6470783781486067460
@@ -563,14 +623,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pc: {fileID: 0}
   Bullet: {fileID: 1012497118445082570, guid: 658095cb901da884f8f00cbbc02e9b13, type: 3}
-  Shell: {fileID: 0}
+  Shell: {fileID: 4426552977220853061, guid: 82b778cd2069be84ea66412f17f376d2, type: 3}
   bulletPooingType: 1
+  shellPoolingType: 0
   isequipped: 0
   MagzCapacity: 7
   currentAmmo: 0
   fireMode: 0
   AimPoint: {x: 0, y: 0, z: 0}
   FirePoint: {fileID: 5857553658824968797}
+  shellEjection: {fileID: 1578557905149411197}
   AimSocket: {fileID: 5058908923017066571}
   Mags: {fileID: 1490547938644898249}
   MagsPrefab: {fileID: 3265041560526089651, guid: 2743d75eae2880e4782126fe748eb317, type: 3}
