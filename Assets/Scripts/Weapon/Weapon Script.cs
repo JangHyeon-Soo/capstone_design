@@ -112,7 +112,8 @@ public class WeaponScript : MonoBehaviour
                 if(shellEjection != null)
                 {
                     GameObject shell = PoolManager.instance.Instantiate(Shell, shellEjection.position + shellEjection.forward * 0.02f, Quaternion.identity, shellPoolingType);
-                    shell.GetComponent<Rigidbody>().AddForce(new Vector3(3000, 3000, 3000), ForceMode.Force);
+                    shell.GetComponent<Rigidbody>().AddForce(shellEjection.right * 200f, ForceMode.Force);
+                    shell.GetComponent<Rigidbody>().AddTorque(new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f)), ForceMode.Impulse);
 
                 }
 
