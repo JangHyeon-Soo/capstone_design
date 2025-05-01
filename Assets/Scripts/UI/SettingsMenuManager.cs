@@ -13,6 +13,7 @@ public class SettingsMenuManager : MonoBehaviour
     {
         displayTabButton.onClick.AddListener(ShowDisplaySettings);
         keyTabButton.onClick.AddListener(ShowKeySettings);
+
         ShowDisplaySettings();
     }
 
@@ -20,11 +21,15 @@ public class SettingsMenuManager : MonoBehaviour
     {
         displaySettingsPanel.SetActive(true);
         keySettingsPanel.SetActive(false);
+
+        displayTabButton.GetComponent<UIButtonHighlighter>().ForceSelect();
     }
 
     public void ShowKeySettings()
     {
         displaySettingsPanel.SetActive(false);
         keySettingsPanel.SetActive(true);
+
+        keyTabButton.GetComponent<UIButtonHighlighter>().ForceSelect();
     }
 }

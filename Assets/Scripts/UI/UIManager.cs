@@ -93,12 +93,22 @@ public class UIManager : MonoBehaviour
 
     void OpenSettings()
     {
+        var settingsManager = settingsMenuUIInstance.GetComponent<SettingsMenuManager>();
+        if (settingsManager != null)
+        {
+            settingsManager.ShowDisplaySettings();
+        }
+
         pauseMenuUIInstance.SetActive(false);
         settingsMenuUIInstance.SetActive(true);
     }
 
     public void ReturnToPauseMenu()
     {
+        foreach (var rebinder in FindObjectsOfType<KeyRebinder>())
+        {
+            rebinder.CancelRebind();
+        }
         settingsMenuUIInstance.SetActive(false);
         pauseMenuUIInstance.SetActive(true);
     }
