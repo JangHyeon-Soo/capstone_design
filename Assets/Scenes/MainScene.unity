@@ -2362,6 +2362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUIPrefab: {fileID: 1023899370972061199, guid: cda71bffa03088745bfe8e1442d22f1e, type: 3}
   canvasTransform: {fileID: 4157122492595703032}
+  settingsMenuUIPrefab: {fileID: 4969836699676151859, guid: df29b19766a969941aeaa2844ea0f4a9, type: 3}
 --- !u!4 &419293322
 Transform:
   m_ObjectHideFlags: 0

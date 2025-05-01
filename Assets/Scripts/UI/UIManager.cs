@@ -8,10 +8,14 @@ public class UIManager : MonoBehaviour
     public GameObject pauseMenuUIPrefab;
     public Transform canvasTransform;
     private GameObject pauseMenuUIInstance;
+    public GameObject settingsMenuUIPrefab;
+    private GameObject settingsMenuUIInstance;
     private bool isPaused = false;
 
     private Button playButton;
     private Button restartButton;
+    private Button settingsButton;
+    private Button backButton;
     private Button quitButton;
 
     void Start()
@@ -30,14 +34,30 @@ public class UIManager : MonoBehaviour
         restartButton = pauseMenuUIInstance.transform.Find("Restart").GetComponent<Button>();
         restartButton.onClick.AddListener(RestartGame);
 
+        settingsButton = pauseMenuUIInstance.transform.Find("Settings").GetComponent<Button>();
+        settingsButton.onClick.AddListener(OpenSettings);
+
         quitButton = pauseMenuUIInstance.transform.Find("Quit").GetComponent<Button>();
         quitButton.onClick.AddListener(QuitGame);
+
+        settingsMenuUIInstance = Instantiate(settingsMenuUIPrefab, canvasTransform);
+        settingsMenuUIInstance.transform.localPosition = Vector3.zero;
+        settingsMenuUIInstance.SetActive(false);
+
+        backButton = settingsMenuUIInstance.transform.Find("LeftMenuPanel/BackButton").GetComponent<Button>();
+        backButton.onClick.AddListener(ReturnToPauseMenu);
+
     }
 
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            if (settingsMenuUIInstance.activeSelf)
+            {
+                ReturnToPauseMenu();
+                return;
+            }
             if (isPaused)
                 ResumeGame();
             else
@@ -69,6 +89,18 @@ public class UIManager : MonoBehaviour
         pauseMenuUIInstance.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void OpenSettings()
+    {
+        pauseMenuUIInstance.SetActive(false);
+        settingsMenuUIInstance.SetActive(true);
+    }
+
+    public void ReturnToPauseMenu()
+    {
+        settingsMenuUIInstance.SetActive(false);
+        pauseMenuUIInstance.SetActive(true);
     }
 
     public void QuitGame()

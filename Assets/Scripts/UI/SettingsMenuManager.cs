@@ -1,0 +1,30 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SettingsMenuManager : MonoBehaviour
+{
+    public GameObject displaySettingsPanel;
+    public GameObject keySettingsPanel;
+
+    public Button displayTabButton;
+    public Button keyTabButton;
+
+    void Start()
+    {
+        displayTabButton.onClick.AddListener(ShowDisplaySettings);
+        keyTabButton.onClick.AddListener(ShowKeySettings);
+        ShowDisplaySettings();
+    }
+
+    public void ShowDisplaySettings()
+    {
+        displaySettingsPanel.SetActive(true);
+        keySettingsPanel.SetActive(false);
+    }
+
+    public void ShowKeySettings()
+    {
+        displaySettingsPanel.SetActive(false);
+        keySettingsPanel.SetActive(true);
+    }
+}
