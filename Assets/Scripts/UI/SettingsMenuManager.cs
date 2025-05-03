@@ -8,6 +8,7 @@ public class SettingsMenuManager : MonoBehaviour
 
     public Button displayTabButton;
     public Button keyTabButton;
+    public ScrollRect keyScrollRect;
 
     void Start()
     {
@@ -29,6 +30,11 @@ public class SettingsMenuManager : MonoBehaviour
     {
         displaySettingsPanel.SetActive(false);
         keySettingsPanel.SetActive(true);
+        
+        if (keyScrollRect != null)
+        {
+            keyScrollRect.verticalNormalizedPosition = 1f;
+        }
 
         keyTabButton.GetComponent<UIButtonHighlighter>().ForceSelect();
     }
