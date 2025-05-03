@@ -3790,6 +3790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUIPrefab: {fileID: 1023899370972061199, guid: cda71bffa03088745bfe8e1442d22f1e, type: 3}
   canvasTransform: {fileID: 4157122492595703032}
+  settingsMenuUIPrefab: {fileID: 4586922206559570906, guid: 07dfa07214452b44c90ce5483d90f4fa, type: 3}
 --- !u!4 &419293322
 Transform:
   m_ObjectHideFlags: 0
@@ -19649,10 +19650,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 2560, y: 1440}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
