@@ -14,6 +14,8 @@ public class KeyRebinder : MonoBehaviour
     private InputActionRebindingExtensions.RebindingOperation rebindOperation;
     private int bindingIndex = -1;
 
+    private static KeyRebinder currentlyRebinding = null;
+
     private void Start()
     {
         playerInput = FindObjectOfType<PlayerInput>();
@@ -48,9 +50,9 @@ public class KeyRebinder : MonoBehaviour
                 bindingIndex = i;
                 return;
             }
-            string lowerPath = (binding.overridePath ?? binding.path ?? "").ToLower();
-            if (!string.IsNullOrEmpty(bindingMatchName) &&
-                lowerPath.Contains("/" + bindingMatchName.ToLower()))
+
+            string path = (binding.overridePath ?? binding.path ?? "").ToLower();
+            if (!string.IsNullOrEmpty(bindingMatchName) && path.Contains("/" + bindingMatchName.ToLower()))
             {
                 bindingIndex = i;
                 return;
@@ -58,17 +60,18 @@ public class KeyRebinder : MonoBehaviour
         }
     }
 
-
-
-
     public void StartRebind()
     {
+        if (currentlyRebinding != null && currentlyRebinding != this)
+        {
+            currentlyRebinding.CancelRebind();
+        }
+
         var action = playerInput.actions[actionName];
-
-        if (rebindOperation != null) return;
-
         action.Disable();
+
         bindingDisplay.text = "wait...";
+        currentlyRebinding = this;
 
         rebindOperation = action.PerformInteractiveRebinding(bindingIndex)
             .WithControlsExcluding("Mouse")
@@ -76,6 +79,7 @@ public class KeyRebinder : MonoBehaviour
             {
                 op.Dispose();
                 rebindOperation = null;
+                currentlyRebinding = null;
 
                 action.Enable();
                 UpdateBindingDisplay();
@@ -90,10 +94,11 @@ public class KeyRebinder : MonoBehaviour
             rebindOperation.Cancel();
             rebindOperation.Dispose();
             rebindOperation = null;
-
-            playerInput.actions[actionName].Enable();
-            UpdateBindingDisplay();
         }
+
+        currentlyRebinding = null;
+        playerInput.actions[actionName].Enable();
+        UpdateBindingDisplay();
     }
 
     void UpdateBindingDisplay()
@@ -106,3 +111,4 @@ public class KeyRebinder : MonoBehaviour
         );
     }
 }
+
