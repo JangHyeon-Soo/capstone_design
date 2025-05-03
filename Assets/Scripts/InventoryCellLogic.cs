@@ -67,6 +67,7 @@ public class InventoryCellLogic : MonoBehaviour
 
         else
         {
+
             InventoryManager im = GetComponentInParent<InventoryManager>();
 
             im.Inventory[im.FindItemIndexInInventoryByCode(Cellitem.Code)].ItemQuantity -= 1;
