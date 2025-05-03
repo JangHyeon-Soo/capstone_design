@@ -3,6 +3,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public static PlayerController[] AllPlayers;
     #region Enum And Class
     public enum CameraMode
     {
@@ -44,6 +45,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+
+        AllPlayers = GetAllPlayers();
     }
 
 
@@ -78,5 +81,10 @@ public class GameManager : MonoBehaviour
                 return found;
         }
         return null;
+    }
+
+    public static PlayerController[] GetAllPlayers()
+    {
+        return GameObject.FindObjectsByType<PlayerController>(FindObjectsSortMode.InstanceID);
     }
 }

@@ -8,7 +8,6 @@ public class ChestController : MonoBehaviour
     public bool isOpen;
 
     Quaternion openRot, closeRot;
-    float timer = 0;
     private void Start()
     {
         closeRot = ChestDoor.localRotation;

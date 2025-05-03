@@ -176,6 +176,7 @@ public class PlayerInteractionManager : MonoBehaviour
             GameManager.CursorOff();
             return;
         }
+
         if (interactionObject == null) return;
 
         switch (interactionObject.layer)
@@ -196,6 +197,7 @@ public class PlayerInteractionManager : MonoBehaviour
                 GameManager.CursorOn();
 
                 break;
+
 
             case 12:
 

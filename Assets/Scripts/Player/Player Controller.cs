@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
         //Move(); // 이동 처리 함수
 
         #region 이동
-        if (!isVaulting && isGrounded)
+        if (!isVaulting && isGrounded && cameraMode == GameManager.CameraMode.FPS)
         {
 
             moveInput = moveAction.ReadValue<Vector3>();
@@ -376,9 +376,30 @@ public class PlayerController : MonoBehaviour
     {
         if (armState != GameManager.armState.Unarmed)
         {
-            isReloading = true;
-            animator.SetTrigger("Reload");
-            IsAimDown = false;
+            switch (armState)
+            {
+                case GameManager.armState.Pistol:
+                    if (GetComponent<InventoryManager>().FindItemIndexInInventoryByCode(3) != -1)
+                    {
+                        isReloading = true;
+                        animator.SetTrigger("Reload");
+                        IsAimDown = false;
+                    }
+
+                    break;
+
+
+                case GameManager.armState.Rifle:
+                    if (GetComponent<InventoryManager>().FindItemIndexInInventoryByCode(4) != -1)
+                    {
+                        isReloading = true;
+                        animator.SetTrigger("Reload");
+                        IsAimDown = false;
+                    }
+                    break;
+            }
+
+
         }
     }
     public void OnAim(InputValue value)

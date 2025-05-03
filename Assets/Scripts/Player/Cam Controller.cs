@@ -42,7 +42,6 @@ public class CamController : MonoBehaviour
     private float shakeFrequency = 1f;
 
     // 흔들기 부드러움을 위한 값
-    private float shakeDecay = 0.1f; // 흔들기 감소율
     private Vector3 shakeVelocity;
 
     private void Awake()
@@ -56,8 +55,6 @@ public class CamController : MonoBehaviour
 
     void LateUpdate()
     {
-        //if (!InputOn) return;
-
         switch (playerController.cameraMode)
         {
             case GameManager.CameraMode.FPS:
@@ -66,18 +63,19 @@ public class CamController : MonoBehaviour
                     CameraFollowTarget = T_fps;
                 }
 
-                if (playerController.IsAimDown && playerController.currentWeapon != null && !playerController.isReloading && !playerController.isRun)
+                if (playerController.IsAimDown && playerController.armState != GameManager.armState.Unarmed)
                 {
+                    
                     transform.position = Vector3.Lerp(transform.position, playerController.currentWeapon.GetComponent<WeaponScript>().AimSocket.position, Time.deltaTime * 13f);
                     transform.rotation = Quaternion.Lerp(transform.rotation, playerController.currentWeapon.GetComponent<WeaponScript>().AimSocket.rotation, Time.deltaTime * 13f);
                 }
+
                 else
                 {
                     transform.position = Vector3.Lerp(transform.position, CameraFollowTarget.position, Time.deltaTime * 13f);
                     transform.rotation = Quaternion.Slerp(transform.rotation, 
                         playerController.isVaulting || playerController.isEquipping || playerController.isUnequipping 
-                        || playerController.isReloading || !playerController.isMove? CameraFollowTarget.rotation :Quaternion.LookRotation((aimPoint.position - transform.position).normalized)
-                        , Time.deltaTime * 13f);
+                        || playerController.isReloading || !playerController.isMove? CameraFollowTarget.rotation :Quaternion.LookRotation((aimPoint.position - transform.position).normalized), Time.deltaTime * 13f);
                 }
 
                 break;
@@ -107,16 +105,6 @@ public class CamController : MonoBehaviour
 
                 break;
         }
-
-        //// 카메라 흔들기 적용 (부드럽게)
-        //if (shakeDuration > 0)
-        //{
-        //    Vector3 shakeOffset = Random.insideUnitSphere * shakeMagnitude;
-        //    transform.position = Vector3.SmoothDamp(transform.position, shakeOriginPosition + shakeOffset, ref shakeVelocity, shakeDecay);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, shakeOriginRotation * Quaternion.Euler(shakeOffset * shakeMagnitude), Time.deltaTime * 5f);
-
-        //    shakeDuration -= Time.deltaTime * shakeFrequency;
-        //}
     }
 
     #region Camera Shake

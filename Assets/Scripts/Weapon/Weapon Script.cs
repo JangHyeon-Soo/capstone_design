@@ -149,10 +149,55 @@ public class WeaponScript : MonoBehaviour
         pc.isReloading = true; 
     }
 
+
     public void ReloadComplete()
     {
         GetComponentInParent<PlayerController>().isReloading = false;
-        currentAmmo = MagzCapacity;
+        PlayerController pc = GetComponentInParent<PlayerController>();
+        int ammoIndex;
+        switch (pc.armState)
+        {
+            case GameManager.armState.Pistol:
+                ammoIndex = pc.GetComponent<InventoryManager>().FindItemIndexInInventoryByCode(3);
+
+                if(pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity > MagzCapacity)
+                {
+                    currentAmmo = MagzCapacity;
+                    pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity -= MagzCapacity;
+                }
+
+                else
+                {
+                    currentAmmo = pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity;
+
+                    pc.GetComponent<InventoryManager>().Inventory.RemoveAt(ammoIndex);
+                    pc.GetComponent<UserInterfaceLogic>().PrintInventory();
+                }
+
+                break;
+
+            case GameManager.armState.Rifle:
+                ammoIndex = pc.GetComponent<InventoryManager>().FindItemIndexInInventoryByCode(4);
+
+                if (pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity > MagzCapacity)
+                {
+                    currentAmmo = MagzCapacity;
+                    pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity -= MagzCapacity;
+                }
+
+                else
+                {
+                    currentAmmo = pc.GetComponent<InventoryManager>().Inventory[ammoIndex].ItemQuantity;
+
+                    pc.GetComponent<InventoryManager>().Inventory.RemoveAt(ammoIndex);
+                    pc.GetComponent<UserInterfaceLogic>().PrintInventory();
+                }
+
+
+                break;
+        }
+
+
     }
 
 }

@@ -30,7 +30,6 @@ public class ItemManagement : MonoBehaviour
 
                 obj.GetComponent<WeaponScript>().isequipped = true;
                 
-                
                 obj.GetComponent<Rigidbody>().isKinematic = true;
                 obj.GetComponent<Collider>().enabled = false;
                 

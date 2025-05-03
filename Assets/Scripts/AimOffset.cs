@@ -154,8 +154,8 @@ public class AimOffset : MonoBehaviour
 
     public void OnLook(InputValue value)
     {
-        
-        if(turn) return;
+        if(turn && !pc.InputOn) return;
+
         lookInput = value.Get<Vector2>();
 
         xRot += lookInput.x * Time.deltaTime * 5f;

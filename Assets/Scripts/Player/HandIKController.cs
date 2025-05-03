@@ -55,7 +55,7 @@ public class HandIKController : MonoBehaviour
     float HandWeight_L = 0;
     float HandWeight_R = 0; 
 
-    float timer = 0;
+    //float timer = 0;
 
     void Start()
     {

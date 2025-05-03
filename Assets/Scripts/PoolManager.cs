@@ -59,8 +59,6 @@ public class PoolManager : MonoBehaviour
                 return lastObject;
 
             }
-
-            Debug.Log(Pool[poolingObjectType].Count);
         }
 
         else
